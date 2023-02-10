@@ -116,6 +116,7 @@ struct WheelView: View {
         ZStack{
             
         ZStack{
+
            Circle()
                 .fill(LinearGradient(Color.darkEnd, Color.darkStart))
                 .frame(width: 350, height: 350)
@@ -132,8 +133,8 @@ struct WheelView: View {
                     //Image("shadow")
                     Image("icon-bg")
                     Image("pink-top")
-                        .rotationEffect(.degrees(isRotating ? 320 : -360))
-                        .hueRotation(.degrees(isRotating ? -270 : 60))
+                        .rotationEffect(.degrees(isRotating ? 320 : -260 ))
+                        .hueRotation(.degrees(isRotating ? -270 : 60 ))
                     Image("pink-left")
                         .rotationEffect(.degrees(isRotating ? -360 : 180))
                         .hueRotation(.degrees(isRotating ? -220 : 300))
@@ -164,32 +165,44 @@ struct WheelView: View {
                         .blendMode(.multiply)
                         .rotation3DEffect(.degrees(75), axis: (x: 5, y:isRotating ? 1 : -45, z: 0))
                 }.scaleEffect(0.326)
-                .blendMode(isRotating ? .hardLight : .difference )
+                //.blendMode(isRotating ? .difference : .hardLight)
+                .blendMode(.hardLight)
                             
                     Image("highlight")
                         .rotationEffect(.degrees(isRotating ? 360 : 250))
                         .hueRotation(.degrees(isRotating ? 0 : 230))
                         .padding()
-                        .onAppear{
-                            withAnimation(.easeInOut(duration: 12).repeatForever(autoreverses: false)) {
-                                        isRotating.toggle()
-                        }
-                    }.scaleEffect(0.326)
-        
-                Button("             \n\n\n\n\n\n") {
+                        .onTapGesture{
+                            if(isRotating) {
+                                withAnimation(.easeInOut(duration: 0)) {
+                                    print("Avant tap tap",isRotating)
+                                    print("Tap tap")
+                                    isRotating.toggle()
+                                    print("Apres tap tap",isRotating)
+                                }
+                            }
+                            else {
+                                withAnimation(.easeInOut(duration: 12).repeatForever()) {
+                                    print("Avant tap tap",isRotating)
+                                    print("Tap tap")
+                                    isRotating.toggle()
+                                    print("Apres tap tap",isRotating)
+                                }
+                            }
+                        }.scaleEffect(0.326)
+                
+                /*Button("             \n\n\n\n\n\n") {
                     let debugTestInstance = BasicFunctions()
                     print(debugTestInstance.debugTest())
-                    print(isRotating)
-                    if (isRotating == false) {
+                    print("isRotating = ", isRotating)
+                    if(isRotating == false) {
                         isRotating = true
-                        print("Je suis à l'écoute")
                     }
                     else {
                         isRotating = false
-                        print("Je n'écoute plus")
                     }
                 }.buttonStyle(.borderless).tint(.pink).controlSize(.large).clipShape(Circle())
-                    .frame(width: 130, height: 130)
+                    .frame(width: 130, height: 130)*/
                     /*.overlay {
                     Circle().stroke(.black, lineWidth: 2)
                     }
