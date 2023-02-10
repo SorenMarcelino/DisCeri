@@ -7,15 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		45EDA8F02992646E00C03356 /* TestUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EDA8EF2992646E00C03356 /* TestUIApp.swift */; };
+		45D468152996834900573475 /* BasicFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D468142996834900573475 /* BasicFunctions.swift */; };
+		45EDA8F02992646E00C03356 /* DisCeriUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EDA8EF2992646E00C03356 /* DisCeriUIApp.swift */; };
 		45EDA8F22992646E00C03356 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EDA8F12992646E00C03356 /* ContentView.swift */; };
 		45EDA8F42992647300C03356 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45EDA8F32992647300C03356 /* Assets.xcassets */; };
 		45EDA8F72992647300C03356 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45EDA8F62992647300C03356 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		45EDA8EC2992646E00C03356 /* TestUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		45EDA8EF2992646E00C03356 /* TestUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUIApp.swift; sourceTree = "<group>"; };
+		45D468142996834900573475 /* BasicFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicFunctions.swift; sourceTree = "<group>"; };
+		45EDA8EC2992646E00C03356 /* DisCeri.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DisCeri.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		45EDA8EF2992646E00C03356 /* DisCeriUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisCeriUIApp.swift; sourceTree = "<group>"; };
 		45EDA8F12992646E00C03356 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		45EDA8F32992647300C03356 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		45EDA8F62992647300C03356 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -35,7 +37,7 @@
 		45EDA8E32992646E00C03356 = {
 			isa = PBXGroup;
 			children = (
-				45EDA8EE2992646E00C03356 /* TestUI */,
+				45EDA8EE2992646E00C03356 /* DisCeriUI */,
 				45EDA8ED2992646E00C03356 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,20 +45,21 @@
 		45EDA8ED2992646E00C03356 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				45EDA8EC2992646E00C03356 /* TestUI.app */,
+				45EDA8EC2992646E00C03356 /* DisCeri.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		45EDA8EE2992646E00C03356 /* TestUI */ = {
+		45EDA8EE2992646E00C03356 /* DisCeriUI */ = {
 			isa = PBXGroup;
 			children = (
-				45EDA8EF2992646E00C03356 /* TestUIApp.swift */,
+				45D468142996834900573475 /* BasicFunctions.swift */,
+				45EDA8EF2992646E00C03356 /* DisCeriUIApp.swift */,
 				45EDA8F12992646E00C03356 /* ContentView.swift */,
 				45EDA8F32992647300C03356 /* Assets.xcassets */,
 				45EDA8F52992647300C03356 /* Preview Content */,
 			);
-			path = TestUI;
+			path = DisCeriUI;
 			sourceTree = "<group>";
 		};
 		45EDA8F52992647300C03356 /* Preview Content */ = {
@@ -70,9 +73,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		45EDA8EB2992646E00C03356 /* TestUI */ = {
+		45EDA8EB2992646E00C03356 /* DisCeri */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 45EDA8FA2992647300C03356 /* Build configuration list for PBXNativeTarget "TestUI" */;
+			buildConfigurationList = 45EDA8FA2992647300C03356 /* Build configuration list for PBXNativeTarget "DisCeri" */;
 			buildPhases = (
 				45EDA8E82992646E00C03356 /* Sources */,
 				45EDA8E92992646E00C03356 /* Frameworks */,
@@ -82,9 +85,9 @@
 			);
 			dependencies = (
 			);
-			name = TestUI;
+			name = DisCeri;
 			productName = TestUI;
-			productReference = 45EDA8EC2992646E00C03356 /* TestUI.app */;
+			productReference = 45EDA8EC2992646E00C03356 /* DisCeri.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -102,7 +105,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 45EDA8E72992646E00C03356 /* Build configuration list for PBXProject "TestUI" */;
+			buildConfigurationList = 45EDA8E72992646E00C03356 /* Build configuration list for PBXProject "DisCeri" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -115,7 +118,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				45EDA8EB2992646E00C03356 /* TestUI */,
+				45EDA8EB2992646E00C03356 /* DisCeri */,
 			);
 		};
 /* End PBXProject section */
@@ -137,8 +140,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45D468152996834900573475 /* BasicFunctions.swift in Sources */,
 				45EDA8F22992646E00C03356 /* ContentView.swift in Sources */,
-				45EDA8F02992646E00C03356 /* TestUIApp.swift in Sources */,
+				45EDA8F02992646E00C03356 /* DisCeriUIApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,7 +270,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"TestUI/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"DisCeriUI/Preview Content\"";
+				DEVELOPMENT_TEAM = ATL5R5VHCG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -294,7 +299,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"TestUI/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"DisCeriUI/Preview Content\"";
+				DEVELOPMENT_TEAM = ATL5R5VHCG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -318,7 +324,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		45EDA8E72992646E00C03356 /* Build configuration list for PBXProject "TestUI" */ = {
+		45EDA8E72992646E00C03356 /* Build configuration list for PBXProject "DisCeri" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				45EDA8F82992647300C03356 /* Debug */,
@@ -327,7 +333,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		45EDA8FA2992647300C03356 /* Build configuration list for PBXNativeTarget "TestUI" */ = {
+		45EDA8FA2992647300C03356 /* Build configuration list for PBXNativeTarget "DisCeri" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				45EDA8FB2992647300C03356 /* Debug */,
