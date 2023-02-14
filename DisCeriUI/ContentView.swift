@@ -111,6 +111,8 @@ struct WheelView: View {
     @State private var pauseplay = false
    
     @State var isRotating = false
+    @State var showSiri = false
+    @State var showButtonSiri = true
 
     var body: some View {
         ZStack{
@@ -124,91 +126,85 @@ struct WheelView: View {
 
             
             // BEGIN - Center Button
-            ZStack{
-                Circle().fill(LinearGradient(Color.darkEnd, Color.darkStart)).frame(width: 130, height: 130).overlay {
-                    Circle().stroke(.black, lineWidth: 2)
-                }
-                .opacity(0.5)
-                ZStack {
-                    //Image("shadow")
-                    Image("icon-bg")
-                    Image("pink-top")
-                        .rotationEffect(.degrees(isRotating ? 320 : -260 ))
-                        .hueRotation(.degrees(isRotating ? -270 : 60 ))
-                    Image("pink-left")
-                        .rotationEffect(.degrees(isRotating ? -360 : 180))
-                        .hueRotation(.degrees(isRotating ? -220 : 300))
-                    Image("blue-middle")
-                        .rotationEffect(.degrees(isRotating ? -360 : 420))
-                        .hueRotation(.degrees(isRotating ? -150 : 0))
-                        .rotation3DEffect(.degrees(75), axis: (x: isRotating ? 1 : 5, y: 0, z: 0))
-                    Image("blue-right")
-                        .rotationEffect(.degrees(isRotating ? -360 : 420))
-                        .hueRotation(.degrees(isRotating ? 720 : -50))
-                        .rotation3DEffect(.degrees(75), axis: (x: 1, y: 0, z: isRotating ? -5 : 15))
-                    /*Image("Intersect")
-                        .rotationEffect(.degrees(isRotating ? 30 : -420))
-                        .hueRotation(.degrees(isRotating ? 0 : 720))
-                        .rotation3DEffect(.degrees(15), axis: (x: 1, y: 1, z: 1), perspective: isRotating ? 5 : -5)*/
-                    Image("green-left")
-                        .rotationEffect(.degrees(isRotating ? -300 : 360))
-                        .hueRotation(.degrees(isRotating ? 300 : -15))
-                        .rotation3DEffect(.degrees(15), axis: (x: 1, y: isRotating ? -1 : 1, z: 0), perspective: isRotating ? -1 : 1)
-                    Image("green-left")
-                        .rotationEffect(.degrees(isRotating ? 360 : -360))
-                        .hueRotation(.degrees(isRotating ? 180 :50))
-                        .rotation3DEffect(.degrees(75), axis: (x: 1, y:isRotating ? -5 : 15, z: 0))
-                    Image("bottom-pink")
-                        .rotationEffect(.degrees(isRotating ? 400 : -360))
-                        .hueRotation(.degrees(isRotating ? 0 : 230))
-                        .opacity(0.25)
-                        .blendMode(.multiply)
-                        .rotation3DEffect(.degrees(75), axis: (x: 5, y:isRotating ? 1 : -45, z: 0))
-                }.scaleEffect(0.326)
-                //.blendMode(isRotating ? .difference : .hardLight)
-                .blendMode(.hardLight)
-                            
+                ZStack{
+                    Circle().fill(LinearGradient(Color.darkEnd, Color.darkStart)).frame(width: 130, height: 130).overlay {
+                        Circle().stroke(.black, lineWidth: 2)
+                    }
+                    .opacity(0.5)
+                    if showSiri{
+                    ZStack {
+                        //Image("shadow")
+                        Image("icon-bg")
+                        Image("pink-top")
+                            .rotationEffect(.degrees(isRotating ? 320 : -260 ))
+                            .hueRotation(.degrees(isRotating ? -270 : 60 ))
+                        Image("pink-left")
+                            .rotationEffect(.degrees(isRotating ? -360 : 180))
+                            .hueRotation(.degrees(isRotating ? -220 : 300))
+                        Image("blue-middle")
+                            .rotationEffect(.degrees(isRotating ? -360 : 420))
+                            .hueRotation(.degrees(isRotating ? -150 : 0))
+                            .rotation3DEffect(.degrees(75), axis: (x: isRotating ? 1 : 5, y: 0, z: 0))
+                        Image("blue-right")
+                            .rotationEffect(.degrees(isRotating ? -360 : 420))
+                            .hueRotation(.degrees(isRotating ? 720 : -50))
+                            .rotation3DEffect(.degrees(75), axis: (x: 1, y: 0, z: isRotating ? -5 : 15))
+                        /*Image("Intersect")
+                         .rotationEffect(.degrees(isRotating ? 30 : -420))
+                         .hueRotation(.degrees(isRotating ? 0 : 720))
+                         .rotation3DEffect(.degrees(15), axis: (x: 1, y: 1, z: 1), perspective: isRotating ? 5 : -5)*/
+                        Image("green-left")
+                            .rotationEffect(.degrees(isRotating ? -300 : 360))
+                            .hueRotation(.degrees(isRotating ? 300 : -15))
+                            .rotation3DEffect(.degrees(15), axis: (x: 1, y: isRotating ? -1 : 1, z: 0), perspective: isRotating ? -1 : 1)
+                        Image("green-left")
+                            .rotationEffect(.degrees(isRotating ? 360 : -360))
+                            .hueRotation(.degrees(isRotating ? 180 :50))
+                            .rotation3DEffect(.degrees(75), axis: (x: 1, y:isRotating ? -5 : 15, z: 0))
+                        Image("bottom-pink")
+                            .rotationEffect(.degrees(isRotating ? 400 : -360))
+                            .hueRotation(.degrees(isRotating ? 0 : 230))
+                            .opacity(0.25)
+                            .blendMode(.multiply)
+                            .rotation3DEffect(.degrees(75), axis: (x: 5, y:isRotating ? 1 : -45, z: 0))
+                    }.scaleEffect(0.326)
+                    //.blendMode(isRotating ? .difference : .hardLight)
+                        .blendMode(.hardLight)
+                    
                     Image("highlight")
                         .rotationEffect(.degrees(isRotating ? 360 : 250))
                         .hueRotation(.degrees(isRotating ? 0 : 230))
                         .padding()
-                        .onTapGesture{
-                            if(isRotating) {
-                                withAnimation(.easeInOut(duration: 0)) {
-                                    print("Avant tap tap",isRotating)
-                                    print("Tap tap")
-                                    isRotating.toggle()
-                                    print("Apres tap tap",isRotating)
-                                }
-                            }
-                            else {
-                                withAnimation(.easeInOut(duration: 12).repeatForever()) {
-                                    print("Avant tap tap",isRotating)
-                                    print("Tap tap")
-                                    isRotating.toggle()
-                                    print("Apres tap tap",isRotating)
-                                }
+                        .onAppear(){
+                            withAnimation(.easeInOut(duration: 15).repeatForever(autoreverses: true)) {
+                                print("Avant tap tap",isRotating)
+                                print("Tap tap")
+                                isRotating.toggle()
+                                print("Apres tap tap",isRotating)
                             }
                         }.scaleEffect(0.326)
+                }
                 
-                /*Button("             \n\n\n\n\n\n") {
-                    let debugTestInstance = BasicFunctions()
-                    print(debugTestInstance.debugTest())
-                    print("isRotating = ", isRotating)
-                    if(isRotating == false) {
-                        isRotating = true
+                    if showButtonSiri {
+                        Button("             \n\n\n\n\n\n") {
+                            let debugTestInstance = BasicFunctions()
+                            print(debugTestInstance.debugTest())
+                            print("showSiri = ", showSiri)
+                            if showSiri == false {
+                                showSiri = true
+                            }
+                            else {
+                                showSiri = false
+                            }
+                            //showButtonSiri = false
+                        }.buttonStyle(.borderless).tint(.pink).controlSize(.large).clipShape(Circle())
+                            .frame(width: 130, height: 130)
+                        /*.overlay {
+                         Circle().stroke(.black, lineWidth: 2)
+                         }
+                         .opacity(0.5)
+                         .cornerRadius(100)*/
                     }
-                    else {
-                        isRotating = false
-                    }
-                }.buttonStyle(.borderless).tint(.pink).controlSize(.large).clipShape(Circle())
-                    .frame(width: 130, height: 130)*/
-                    /*.overlay {
-                    Circle().stroke(.black, lineWidth: 2)
-                    }
-                    .opacity(0.5)
-                    .cornerRadius(100)*/
-                
                 
         
                 
