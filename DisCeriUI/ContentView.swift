@@ -7,6 +7,7 @@
 //  Instagram : theappwizard2408
 
 import SwiftUI
+import AVFoundation
 
 extension Color {
     
@@ -23,6 +24,7 @@ extension LinearGradient {
 
 struct ContentView: View {
     @State private var menutap = false
+    
     var body: some View {
         ZStack{
             Color.black.edgesIgnoringSafeArea(.all)
@@ -33,17 +35,12 @@ struct ContentView: View {
                     DisplayContent()
                         .offset(x: 0, y: 50)
                     
-                    
-                    
-                    
-                    
+                
 //                     Not Used
 //                    PlayerFooter()
 //                        .offset(x: 0, y: 150)
                     
-                    
     ZStack{
-                    
         if menutap {
                 Text("MENU")
                     .font(.title)
@@ -113,6 +110,8 @@ struct WheelView: View {
     @State var isRotating = false
     @State var showSiri = false
     @State var showButtonSiri = true
+    
+    @StateObject var speechRecognizer = SpeechRecognizer() // Speech
 
     var body: some View {
         ZStack{
@@ -125,7 +124,7 @@ struct WheelView: View {
                 .opacity(0.5)
 
             
-            // BEGIN - Center Button
+            // MARK: BEGIN - SIRI Center Button
                 ZStack{
                     Circle().fill(LinearGradient(Color.darkEnd, Color.darkStart)).frame(width: 130, height: 130).overlay {
                         Circle().stroke(.black, lineWidth: 2)
@@ -168,8 +167,7 @@ struct WheelView: View {
                             .blendMode(.multiply)
                             .rotation3DEffect(.degrees(75), axis: (x: 5, y:isRotating ? 1 : -45, z: 0))
                     }.scaleEffect(0.326)
-                    //.blendMode(isRotating ? .difference : .hardLight)
-                        .blendMode(.hardLight)
+                    .blendMode(.hardLight)
                     
                     Image("highlight")
                         .rotationEffect(.degrees(isRotating ? 360 : 250))
@@ -177,26 +175,33 @@ struct WheelView: View {
                         .padding()
                         .onAppear(){
                             withAnimation(.easeInOut(duration: 15).repeatForever(autoreverses: true)) {
-                                print("Avant tap tap",isRotating)
-                                print("Tap tap")
-                                isRotating.toggle()
-                                print("Apres tap tap",isRotating)
+                                // print("Avant tap tap",isRotating) // To delete on prod
+                                // print("Tap tap") // To delete on prod
+                                isRotating = true
+                                print("Apres tap tap",isRotating) // To delete on prod
+                                
+                                speechRecognizer.recordButtonTapped() // Speech
+
                             }
                         }.scaleEffect(0.326)
+                            .onDisappear() {
+                                speechRecognizer.recordButtonTapped() // Speech
+                                isRotating = false
+                                print("From Front : " + speechRecognizer.transcript) // Speech // To delete on prod
+                            }
                 }
                 
                     if showButtonSiri {
                         Button("             \n\n\n\n\n\n") {
-                            let debugTestInstance = BasicFunctions()
-                            print(debugTestInstance.debugTest())
-                            print("showSiri = ", showSiri)
+                            // let debugTestInstance = BasicFunctions() // To delete on prod
+                            // print(debugTestInstance.debugTest()) // To delete on prod
+                            // print("showSiri = ", showSiri) // To delete on prod
                             if showSiri == false {
                                 showSiri = true
                             }
                             else {
                                 showSiri = false
                             }
-                            //showButtonSiri = false
                         }.buttonStyle(.borderless).tint(.pink).controlSize(.large).clipShape(Circle())
                             .frame(width: 130, height: 130)
                         /*.overlay {
@@ -205,41 +210,9 @@ struct WheelView: View {
                          .opacity(0.5)
                          .cornerRadius(100)*/
                     }
-                
+
+            // MARK: END - SIRI Center Button
         
-                
-                /*Button("             \n\n\n\n\n\n"){ // A enlever
-                    let debugTestInstance = BasicFunctions()
-                    print(debugTestInstance.debugTest())
-                }.buttonStyle(.borderedProminent).tint(.pink).controlSize(.large).clipShape(Circle())
-                    .frame(width: 130, height: 130)
-                    .overlay {
-                    Circle().stroke(.blue, lineWidth: 2)
-                    }
-                    .opacity(0.5)
-                    .background(LinearGradient(Color.yellow, Color.darkStart))
-                    .cornerRadius(100)*/
-                
-                
-            // END - Center Button
-                
-                    // Image("shadow").resizable().scaledToFill()
-                    //Image("icon-bg").resizable().aspectRatio(contentMode: .fill)
-                    /*Image("pink-top").resizable().frame(width: 130, height: 130)
-                    Image("pink-left").resizable().frame(width: 130, height: 130)
-                    Image("blue-middle").resizable().frame(width: 130, height: 130)
-                    Image("blue-right").resizable().frame(width: 130, height: 130)
-                    Image("Intersect").resizable().frame(width: 130, height: 130)
-                    Image("green-right").resizable().frame(width: 130, height: 130)
-                    Image("green-left").resizable().frame(width: 130, height: 130)
-                    Group {
-                        Image("bottom-pink").resizable().frame(width: 130, height: 130)
-                        Image("highlight").resizable().frame(width: 130, height: 130)
-                    }*/
-        
-               
-        
-                
                 ZStack{
                     if pauseplay {
                         Image(systemName: "playpause.fill")
