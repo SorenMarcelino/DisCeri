@@ -24,7 +24,7 @@ class SpeechRecognizer: ObservableObject {
         
         // Configure the audio session for the app.
         let audioSession = AVAudioSession.sharedInstance()
-        try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
+        try audioSession.setCategory(.playAndRecord, mode: .measurement, options: .duckOthers)
         try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
         let inputNode = audioEngine.inputNode
 
@@ -72,11 +72,19 @@ class SpeechRecognizer: ObservableObject {
     }
     
     // MARK: Interface Builder actions
-    
     @IBAction func recordButtonTapped() {
         if audioEngine.isRunning {
             audioEngine.stop()
             recognitionRequest?.endAudio()
+            let audioSession = AVAudioSession.sharedInstance()
+            do{
+                // try audioSession.setCategory(.playback) // A commenter si overrideOutputAudioPort(.speaker) décommenté
+                try audioSession.setMode(.default)
+                try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+                try audioSession.overrideOutputAudioPort(.speaker) // A commenter si setCategory(.playback) décommenté
+            } catch let error {
+                print(error)
+            }
             print("Audio Engine is running ! Let's stop it.")
             print("Audio Engine is now stopped")
         } else {

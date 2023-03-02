@@ -89,16 +89,26 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct DisplayView: View {
+    @State var playMusic = MusicPlayerManager()
+    @State var speechTest = SpeechRecognizer()
+
+    @State var lyrics = ""
+    
     var body: some View {
         ZStack{
+            Text(lyrics)
+
             RoundedRectangle(cornerRadius: 25)
                 .foregroundColor(.gray)
                 .frame(width: 400, height: 400)
                 .opacity(0.1)
-            
+                .onAppear(){
+                    // speechTest.recordButtonTapped() // MARK: Si SpeechKit lancé au démarrage de l'app
+                    playMusic.playMusic() // MARK: Joue la musique au démarrage de l'application
+                }
+            }
         }
     }
-}
 
 //IPod Wheel
 struct WheelView: View {
@@ -109,8 +119,7 @@ struct WheelView: View {
    
     @State var isRotating = false
     @State var showSiri = false
-    @State var showButtonSiri = true
-    
+        
     @StateObject var speechRecognizer = SpeechRecognizer() // Speech
 
     var body: some View {
@@ -175,11 +184,8 @@ struct WheelView: View {
                         .padding()
                         .onAppear(){
                             withAnimation(.easeInOut(duration: 15).repeatForever(autoreverses: true)) {
-                                // print("Avant tap tap",isRotating) // To delete on prod
-                                // print("Tap tap") // To delete on prod
                                 isRotating = true
                                 print("Apres tap tap",isRotating) // To delete on prod
-                                
                                 speechRecognizer.recordButtonTapped() // Speech
 
                             }
@@ -191,11 +197,7 @@ struct WheelView: View {
                             }
                 }
                 
-                    if showButtonSiri {
                         Button("             \n\n\n\n\n\n") {
-                            // let debugTestInstance = BasicFunctions() // To delete on prod
-                            // print(debugTestInstance.debugTest()) // To delete on prod
-                            // print("showSiri = ", showSiri) // To delete on prod
                             if showSiri == false {
                                 showSiri = true
                             }
@@ -204,12 +206,6 @@ struct WheelView: View {
                             }
                         }.buttonStyle(.borderless).tint(.pink).controlSize(.large).clipShape(Circle())
                             .frame(width: 130, height: 130)
-                        /*.overlay {
-                         Circle().stroke(.black, lineWidth: 2)
-                         }
-                         .opacity(0.5)
-                         .cornerRadius(100)*/
-                    }
 
             // MARK: END - SIRI Center Button
         
