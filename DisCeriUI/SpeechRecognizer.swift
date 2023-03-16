@@ -3,6 +3,9 @@ import Foundation
 import Speech
 import SwiftUI
 
+// MARK: Exported to ASR standalone project
+
+// Following code not used anymore
 class SpeechRecognizer: ObservableObject {
     // MARK: Properties
     

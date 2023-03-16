@@ -9,14 +9,14 @@ import Foundation
 import Swifter
 
 class ASRSoapRequest {
-    func requestASR() {
-        guard let url = Bundle.main.url(forResource: "MacronASRTestPart", withExtension: "mp3") else {
+    func requestASR(audioURL: URL) {
+        /*guard let url = Bundle.main.url(forResource: "MacronASRTestPart", withExtension: "mp3") else {
             print("Error: Failed to find the music file.")
             return
-        }
+        }*/
         
         // Read the audio file as data
-        guard let audioData = try? Data(contentsOf: url) else {
+        guard let audioData = try? Data(contentsOf: audioURL) else {
             print("Could not read audio file")
             return
         }
@@ -39,7 +39,7 @@ class ASRSoapRequest {
         // Set the URL of the server endpoint
         let ipCERI = "10.126.2.87"
         let ipSoren = "192.168.1.154"
-        let urlString = "http://\(ipCERI):45876/transcribe"
+        let urlString = "http://\(ipSoren):45876/transcribe"
         
         // Create a URL request with the SOAP message as the body
         var request = URLRequest(url: URL(string: urlString)!)

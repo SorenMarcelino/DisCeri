@@ -91,7 +91,6 @@ struct ContentView_Previews: PreviewProvider {
 struct DisplayView: View {
     @State var playMusic = MusicPlayerManager()
     @State var speechTest = SpeechRecognizer()
-
     @State var lyrics = ""
     
     var body: some View {
@@ -104,7 +103,7 @@ struct DisplayView: View {
                 .opacity(0.1)
                 .onAppear(){
                     // speechTest.recordButtonTapped() // MARK: Si SpeechKit lancé au démarrage de l'app
-                    playMusic.playMusic() // MARK: Joue la musique au démarrage de l'application
+                    // playMusic.playMusic() // MARK: Joue la musique au démarrage de l'application
                 }
             }
         }
@@ -123,6 +122,8 @@ struct WheelView: View {
     @StateObject var speechRecognizer = SpeechRecognizer() // MARK: Speech
     @State var tokenizer = Tokenisation() // MARK: Tokentisation
     @State var asrRequest = ASRSoapRequest()
+    @State var playMusic = MusicPlayerManager()
+    @State var recordAudio = AudioRecorder()
 
     var body: some View {
         ZStack{
@@ -189,12 +190,15 @@ struct WheelView: View {
                                 isRotating = true
                                 print("Apres tap tap",isRotating) // To delete on prod
                                 //speechRecognizer.recordButtonTapped() // Speech
-                                asrRequest.requestASR()
+                                recordAudio.startRecording()
+                                //asrRequest.requestASR()
                             }
                         }.scaleEffect(0.326)
                             .onDisappear() {
                                 //speechRecognizer.recordButtonTapped() // Speech
+                                recordAudio.stopRecording()
                                 isRotating = false
+                                //playMusic.playMusic()
                                 //print("From Front : " + speechRecognizer.transcript) // Speech // To delete on prod
                                 //tokenizer.tokentizer(transcription: speechRecognizer.transcript)
                             }
