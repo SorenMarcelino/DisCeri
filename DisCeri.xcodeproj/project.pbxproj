@@ -7,26 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		450F1E0D29B0FA0B00A21A17 /* NaturalLanguageProcesser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F1E0C29B0FA0B00A21A17 /* NaturalLanguageProcesser.swift */; };
 		4519F76629AB6F41009414CA /* Lomepal.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4519F76529AB6F41009414CA /* Lomepal.mp3 */; };
 		4519F76A29AB7C43009414CA /* MusicPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4519F76929AB7C43009414CA /* MusicPlayerManager.swift */; };
 		454CF596299E9AF6002DDD54 /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CF595299E9AF6002DDD54 /* SpeechRecognizer.swift */; };
+		45A2D87929C2FDB800F125DB /* AntoineDanielASRTestPart.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 45A2D87829C2FDB800F125DB /* AntoineDanielASRTestPart.mp3 */; };
 		45D468152996834900573475 /* BasicFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D468142996834900573475 /* BasicFunctions.swift */; };
 		45EDA8F02992646E00C03356 /* DisCeriUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EDA8EF2992646E00C03356 /* DisCeriUIApp.swift */; };
 		45EDA8F22992646E00C03356 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EDA8F12992646E00C03356 /* ContentView.swift */; };
 		45EDA8F42992647300C03356 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45EDA8F32992647300C03356 /* Assets.xcassets */; };
 		45EDA8F72992647300C03356 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45EDA8F62992647300C03356 /* Preview Assets.xcassets */; };
+		45EF348129C21B6F00DCDAFC /* ASRSoapRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EF348029C21B6F00DCDAFC /* ASRSoapRequest.swift */; };
+		45EF348429C21BC800DCDAFC /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = 45EF348329C21BC800DCDAFC /* Swifter */; };
+		45EF348629C21DEB00DCDAFC /* MacronASRTestPart.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 45EF348529C21DEB00DCDAFC /* MacronASRTestPart.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		450F1E0C29B0FA0B00A21A17 /* NaturalLanguageProcesser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturalLanguageProcesser.swift; sourceTree = "<group>"; };
 		4519F76529AB6F41009414CA /* Lomepal.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Lomepal.mp3; sourceTree = "<group>"; };
 		4519F76929AB7C43009414CA /* MusicPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerManager.swift; sourceTree = "<group>"; };
 		454CF595299E9AF6002DDD54 /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
+		45A2D87829C2FDB800F125DB /* AntoineDanielASRTestPart.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = AntoineDanielASRTestPart.mp3; sourceTree = "<group>"; };
 		45D468142996834900573475 /* BasicFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicFunctions.swift; sourceTree = "<group>"; };
 		45EDA8EC2992646E00C03356 /* DisCeri.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DisCeri.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45EDA8EF2992646E00C03356 /* DisCeriUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisCeriUIApp.swift; sourceTree = "<group>"; };
 		45EDA8F12992646E00C03356 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		45EDA8F32992647300C03356 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		45EDA8F62992647300C03356 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		45EF348029C21B6F00DCDAFC /* ASRSoapRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASRSoapRequest.swift; sourceTree = "<group>"; };
+		45EF348529C21DEB00DCDAFC /* MacronASRTestPart.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MacronASRTestPart.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45EF348429C21BC800DCDAFC /* Swifter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,7 +76,11 @@
 				45EDA8F12992646E00C03356 /* ContentView.swift */,
 				45EDA8F32992647300C03356 /* Assets.xcassets */,
 				4519F76929AB7C43009414CA /* MusicPlayerManager.swift */,
+				450F1E0C29B0FA0B00A21A17 /* NaturalLanguageProcesser.swift */,
 				45EDA8F52992647300C03356 /* Preview Content */,
+				45EF348029C21B6F00DCDAFC /* ASRSoapRequest.swift */,
+				45EF348529C21DEB00DCDAFC /* MacronASRTestPart.mp3 */,
+				45A2D87829C2FDB800F125DB /* AntoineDanielASRTestPart.mp3 */,
 			);
 			path = DisCeriUI;
 			sourceTree = "<group>";
@@ -95,6 +109,9 @@
 			dependencies = (
 			);
 			name = DisCeri;
+			packageProductDependencies = (
+				45EF348329C21BC800DCDAFC /* Swifter */,
+			);
 			productName = TestUI;
 			productReference = 45EDA8EC2992646E00C03356 /* DisCeri.app */;
 			productType = "com.apple.product-type.application";
@@ -123,6 +140,9 @@
 				Base,
 			);
 			mainGroup = 45EDA8E32992646E00C03356;
+			packageReferences = (
+				45EF348229C21BC800DCDAFC /* XCRemoteSwiftPackageReference "swifter" */,
+			);
 			productRefGroup = 45EDA8ED2992646E00C03356 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -137,6 +157,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45A2D87929C2FDB800F125DB /* AntoineDanielASRTestPart.mp3 in Resources */,
+				45EF348629C21DEB00DCDAFC /* MacronASRTestPart.mp3 in Resources */,
 				45EDA8F72992647300C03356 /* Preview Assets.xcassets in Resources */,
 				45EDA8F42992647300C03356 /* Assets.xcassets in Resources */,
 				4519F76629AB6F41009414CA /* Lomepal.mp3 in Resources */,
@@ -150,9 +172,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				450F1E0D29B0FA0B00A21A17 /* NaturalLanguageProcesser.swift in Sources */,
 				45D468152996834900573475 /* BasicFunctions.swift in Sources */,
 				454CF596299E9AF6002DDD54 /* SpeechRecognizer.swift in Sources */,
 				45EDA8F22992646E00C03356 /* ContentView.swift in Sources */,
+				45EF348129C21B6F00DCDAFC /* ASRSoapRequest.swift in Sources */,
 				4519F76A29AB7C43009414CA /* MusicPlayerManager.swift in Sources */,
 				45EDA8F02992646E00C03356 /* DisCeriUIApp.swift in Sources */,
 			);
@@ -359,6 +383,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		45EF348229C21BC800DCDAFC /* XCRemoteSwiftPackageReference "swifter" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/httpswift/swifter.git";
+			requirement = {
+				branch = stable;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		45EF348329C21BC800DCDAFC /* Swifter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 45EF348229C21BC800DCDAFC /* XCRemoteSwiftPackageReference "swifter" */;
+			productName = Swifter;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 45EDA8E42992646E00C03356 /* Project object */;
 }

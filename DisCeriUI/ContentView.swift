@@ -120,7 +120,9 @@ struct WheelView: View {
     @State var isRotating = false
     @State var showSiri = false
         
-    @StateObject var speechRecognizer = SpeechRecognizer() // Speech
+    @StateObject var speechRecognizer = SpeechRecognizer() // MARK: Speech
+    @State var tokenizer = Tokenisation() // MARK: Tokentisation
+    @State var asrRequest = ASRSoapRequest()
 
     var body: some View {
         ZStack{
@@ -186,14 +188,15 @@ struct WheelView: View {
                             withAnimation(.easeInOut(duration: 15).repeatForever(autoreverses: true)) {
                                 isRotating = true
                                 print("Apres tap tap",isRotating) // To delete on prod
-                                speechRecognizer.recordButtonTapped() // Speech
-
+                                //speechRecognizer.recordButtonTapped() // Speech
+                                asrRequest.requestASR()
                             }
                         }.scaleEffect(0.326)
                             .onDisappear() {
-                                speechRecognizer.recordButtonTapped() // Speech
+                                //speechRecognizer.recordButtonTapped() // Speech
                                 isRotating = false
-                                print("From Front : " + speechRecognizer.transcript) // Speech // To delete on prod
+                                //print("From Front : " + speechRecognizer.transcript) // Speech // To delete on prod
+                                //tokenizer.tokentizer(transcription: speechRecognizer.transcript)
                             }
                 }
                 

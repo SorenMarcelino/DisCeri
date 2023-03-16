@@ -14,7 +14,7 @@ class MusicPlayerManager: NSObject {
     private var isPlaying = false
     
     func playMusic() {
-        guard let url = Bundle.main.url(forResource: "Lomepal", withExtension: "mp3") else {
+        guard let url = Bundle.main.url(forResource: "MacronASRTestPart", withExtension: "mp3") else {
             print("Error: Failed to find the music file.")
             return
         }
