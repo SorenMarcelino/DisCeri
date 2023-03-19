@@ -8,6 +8,7 @@
 
 import SwiftUI
 import AVFoundation
+import MobileVLCKit
 
 extension Color {
     
@@ -64,7 +65,6 @@ struct ContentView: View {
                             )
         
                if menutap {
-                
                    ZStack{
                        CustomMenu()
                            .mask(AnimatedMask())
@@ -87,6 +87,20 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+/*class PlayerVLC: NSObject, VLCMediaPlayerDelegate {
+    
+    let ipSoren = "192.168.1.154"
+    let ipCERI = "10.126.2.87"
+    let player = VLCMediaPlayer()
+
+    override init() {
+        super.init()
+        self.player.delegate = self
+        let media = VLCMedia(url: URL(string: "rstp://\(ipSoren):5000/music")!)
+        player.media = media
+    }
+}*/
 
 struct DisplayView: View {
     @State var playMusic = MusicPlayerManager()
@@ -124,6 +138,24 @@ struct WheelView: View {
     @State var asrRequest = ASRSoapRequest()
     @State var playMusic = MusicPlayerManager()
     @State var recordAudio = AudioRecorder()
+    
+    @State var playAudio = ClientVLC()
+    
+    class PlayerVLC: NSObject, VLCMediaPlayerDelegate {
+        let ipSoren = "192.168.1.154"
+        let ipCERI = "10.126.2.87"
+        let player = VLCMediaPlayer()
+        
+        override init() {
+            super.init()
+            print("CA MARCHE")
+            player.delegate = self
+            let media = VLCMedia(url: URL(string: "rtsp://\(ipSoren):5777/music")!)
+            player.media = media
+        }
+    }
+    
+    @State var playerVLC = PlayerVLC()
 
     var body: some View {
         ZStack{
@@ -232,7 +264,10 @@ struct WheelView: View {
                     .gesture(
                         TapGesture()
                             .onEnded({
-                                self.pauseplay.toggle()
+                                // self.pauseplay.toggle()
+                                print("Tap play")
+                                playAudio.play()
+                                playerVLC.player.play()
                             })
                     
                     )
@@ -441,6 +476,10 @@ struct CustomMenu: View {
     @State private var Extras = false
     @State private var Settings = false
     
+    @State var importAudio = ImportAudio()
+    @State var helloWorldIce = ClientVLC()
+    @State var uploadAudioFile = ClientVLC()
+    
     var body: some View {
         ZStack{
             RoundedRectangle(cornerRadius: 25)
@@ -462,13 +501,13 @@ struct CustomMenu: View {
                 
                 ZStack{
               
-                    MenuContent(textinput: "Music",bgColor: Color.black.opacity(0.8))
+                    MenuContent(textinput: "Upload music",bgColor: Color.black.opacity(0.8))
                         .gesture(
                             TapGesture()
                                 .onEnded({
-                                    self.Music.toggle()
+                                    // self.Music.toggle()
+                                    helloWorldIce.helloWorld()
                                 })
-                        
                         )
                     
                     if Music{
@@ -482,7 +521,9 @@ struct CustomMenu: View {
                         .gesture(
                             TapGesture()
                                 .onEnded({
-                                    self.Photos.toggle()
+                                    //self.Photos.toggle()
+                                    print("Tap tap")
+                                    uploadAudioFile.uploadAudioFile()
                                 })
                         
                         )

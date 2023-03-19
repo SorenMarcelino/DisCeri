@@ -7,9 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		450CCC9429C3C9FC0008BA3E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 450CCC9329C3C9FC0008BA3E /* AudioToolbox.framework */; };
+		450CCC9629C3CA050008BA3E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 450CCC9529C3CA050008BA3E /* AVFoundation.framework */; };
+		450CCC9829C3CA0C0008BA3E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 450CCC9729C3CA0C0008BA3E /* CFNetwork.framework */; };
+		450CCC9A29C3CA110008BA3E /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 450CCC9929C3CA110008BA3E /* CoreFoundation.framework */; };
+		450CCC9C29C3CA160008BA3E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 450CCC9B29C3CA160008BA3E /* CoreGraphics.framework */; };
+		450CCC9E29C3CA1D0008BA3E /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 450CCC9D29C3CA1D0008BA3E /* CoreMedia.framework */; };
+		450CCCA029C3CA230008BA3E /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 450CCC9F29C3CA230008BA3E /* CoreText.framework */; };
+		450CCCA229C3CA280008BA3E /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 450CCCA129C3CA280008BA3E /* CoreVideo.framework */; };
+		450CCCA429C3CA2E0008BA3E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 450CCCA329C3CA2E0008BA3E /* Foundation.framework */; };
+		450CCCA629C3CA340008BA3E /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 450CCCA529C3CA340008BA3E /* libbz2.tbd */; };
+		450CCCA829C3CA380008BA3E /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 450CCCA729C3CA380008BA3E /* libc++.tbd */; };
+		450CCCAA29C3CA3C0008BA3E /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 450CCCA929C3CA3C0008BA3E /* libiconv.tbd */; };
+		450CCCAC29C3CA410008BA3E /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 450CCCAB29C3CA410008BA3E /* libxml2.tbd */; };
+		450CCCAE29C3CA460008BA3E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 450CCCAD29C3CA460008BA3E /* OpenGLES.framework */; };
+		450CCCB029C3CA4A0008BA3E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 450CCCAF29C3CA4A0008BA3E /* QuartzCore.framework */; };
+		450CCCB229C3CA4F0008BA3E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 450CCCB129C3CA4F0008BA3E /* Security.framework */; };
+		450CCCB429C3CA530008BA3E /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 450CCCB329C3CA530008BA3E /* VideoToolbox.framework */; };
+		450CCCB629C3CA5A0008BA3E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 450CCCB529C3CA5A0008BA3E /* UIKit.framework */; };
+		450CCCB929C3CACE0008BA3E /* header.m in Sources */ = {isa = PBXBuildFile; fileRef = 450CCCB829C3CACE0008BA3E /* header.m */; };
+		450CCCBB29C3CB5F0008BA3E /* ClientVLC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450CCCBA29C3CB5F0008BA3E /* ClientVLC.swift */; };
 		450F1E0D29B0FA0B00A21A17 /* NaturalLanguageProcesser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450F1E0C29B0FA0B00A21A17 /* NaturalLanguageProcesser.swift */; };
 		4519F76629AB6F41009414CA /* Lomepal.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4519F76529AB6F41009414CA /* Lomepal.mp3 */; };
 		4519F76A29AB7C43009414CA /* MusicPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4519F76929AB7C43009414CA /* MusicPlayerManager.swift */; };
+		4530324F29C735810052A22B /* ImportAudioFromFilesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530324E29C735810052A22B /* ImportAudioFromFilesApp.swift */; };
+		4530325129C749D10052A22B /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530325029C749D10052A22B /* Package.swift */; };
+		4530325629C74EC40052A22B /* Printer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530325529C74EC40052A22B /* Printer.swift */; };
+		4530325A29C74FF20052A22B /* Ice in Frameworks */ = {isa = PBXBuildFile; productRef = 4530325929C74FF20052A22B /* Ice */; };
+		4530325C29C7536B0052A22B /* Config.client in Resources */ = {isa = PBXBuildFile; fileRef = 4530325B29C7536B0052A22B /* Config.client */; };
 		454CF596299E9AF6002DDD54 /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CF595299E9AF6002DDD54 /* SpeechRecognizer.swift */; };
 		454F3B7129C36D240019A6EC /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F3B7029C36D240019A6EC /* AudioRecorder.swift */; };
 		45A2D87929C2FDB800F125DB /* AntoineDanielASRTestPart.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 45A2D87829C2FDB800F125DB /* AntoineDanielASRTestPart.mp3 */; };
@@ -21,12 +46,56 @@
 		45EF348129C21B6F00DCDAFC /* ASRSoapRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EF348029C21B6F00DCDAFC /* ASRSoapRequest.swift */; };
 		45EF348429C21BC800DCDAFC /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = 45EF348329C21BC800DCDAFC /* Swifter */; };
 		45EF348629C21DEB00DCDAFC /* MacronASRTestPart.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 45EF348529C21DEB00DCDAFC /* MacronASRTestPart.mp3 */; };
+		9BA0BBFE671CC6CC14EB63F5 /* Pods_DisCeri.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E713AAF4B6D43484DDA1A2 /* Pods_DisCeri.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		4530325429C74D0A0052A22B /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.ice";
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).swift\n",
+			);
+			script = "# Type a script or drag a script file from your workspace to insert its path.\nif [ -f /usr/local/bin/slice2swift ]; then\n    SLICE2SWIFT=/usr/local/bin/slice2swift\n    SLICEDIR=/usr/local/share/slice2swift/slice\nelse\n    echo \"Failed to locate slice2swift compiler\"\n    exit 1\nfi\n \n\"$SLICE2SWIFT\" -I\"$SLICEDIR\" -I\"$INPUT_FILE_DIR\" --output-dir \"$DERIVED_FILE_DIR\" \"$INPUT_FILE_PATH\"\n";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXFileReference section */
+		28E713AAF4B6D43484DDA1A2 /* Pods_DisCeri.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DisCeri.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		450CCC9329C3C9FC0008BA3E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		450CCC9529C3CA050008BA3E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		450CCC9729C3CA0C0008BA3E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		450CCC9929C3CA110008BA3E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		450CCC9B29C3CA160008BA3E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		450CCC9D29C3CA1D0008BA3E /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		450CCC9F29C3CA230008BA3E /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		450CCCA129C3CA280008BA3E /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		450CCCA329C3CA2E0008BA3E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		450CCCA529C3CA340008BA3E /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
+		450CCCA729C3CA380008BA3E /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		450CCCA929C3CA3C0008BA3E /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		450CCCAB29C3CA410008BA3E /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		450CCCAD29C3CA460008BA3E /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		450CCCAF29C3CA4A0008BA3E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		450CCCB129C3CA4F0008BA3E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		450CCCB329C3CA530008BA3E /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		450CCCB529C3CA5A0008BA3E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		450CCCB729C3CACD0008BA3E /* DisCeri-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DisCeri-Bridging-Header.h"; sourceTree = "<group>"; };
+		450CCCB829C3CACE0008BA3E /* header.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = header.m; sourceTree = "<group>"; };
+		450CCCBA29C3CB5F0008BA3E /* ClientVLC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientVLC.swift; sourceTree = "<group>"; };
 		450F1E0C29B0FA0B00A21A17 /* NaturalLanguageProcesser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturalLanguageProcesser.swift; sourceTree = "<group>"; };
 		4519F76529AB6F41009414CA /* Lomepal.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Lomepal.mp3; sourceTree = "<group>"; };
 		4519F76929AB7C43009414CA /* MusicPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerManager.swift; sourceTree = "<group>"; };
+		4530324E29C735810052A22B /* ImportAudioFromFilesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportAudioFromFilesApp.swift; sourceTree = "<group>"; };
+		4530325029C749D10052A22B /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		4530325329C74C910052A22B /* ice-spm-3.7.8 */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "ice-spm-3.7.8"; path = "../../Downloads/ice-spm-3.7.8"; sourceTree = "<group>"; };
+		4530325529C74EC40052A22B /* Printer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Printer.swift; sourceTree = "<group>"; };
+		4530325B29C7536B0052A22B /* Config.client */ = {isa = PBXFileReference; lastKnownFileType = text; path = Config.client; sourceTree = "<group>"; };
 		454CF595299E9AF6002DDD54 /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		454F3B7029C36D240019A6EC /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		45A2D87829C2FDB800F125DB /* AntoineDanielASRTestPart.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = AntoineDanielASRTestPart.mp3; sourceTree = "<group>"; };
@@ -38,6 +107,8 @@
 		45EDA8F62992647300C03356 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		45EF348029C21B6F00DCDAFC /* ASRSoapRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASRSoapRequest.swift; sourceTree = "<group>"; };
 		45EF348529C21DEB00DCDAFC /* MacronASRTestPart.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MacronASRTestPart.mp3; sourceTree = "<group>"; };
+		83A05B17DB2744070128DB1F /* Pods-DisCeri.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DisCeri.debug.xcconfig"; path = "Target Support Files/Pods-DisCeri/Pods-DisCeri.debug.xcconfig"; sourceTree = "<group>"; };
+		A80842524F7432E62F7E4299 /* Pods-DisCeri.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DisCeri.release.xcconfig"; path = "Target Support Files/Pods-DisCeri/Pods-DisCeri.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,18 +116,50 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				450CCCB629C3CA5A0008BA3E /* UIKit.framework in Frameworks */,
+				450CCCB429C3CA530008BA3E /* VideoToolbox.framework in Frameworks */,
+				450CCCB229C3CA4F0008BA3E /* Security.framework in Frameworks */,
+				450CCCB029C3CA4A0008BA3E /* QuartzCore.framework in Frameworks */,
+				450CCCAE29C3CA460008BA3E /* OpenGLES.framework in Frameworks */,
+				450CCCAC29C3CA410008BA3E /* libxml2.tbd in Frameworks */,
+				4530325A29C74FF20052A22B /* Ice in Frameworks */,
+				450CCCAA29C3CA3C0008BA3E /* libiconv.tbd in Frameworks */,
+				450CCCA829C3CA380008BA3E /* libc++.tbd in Frameworks */,
+				450CCCA629C3CA340008BA3E /* libbz2.tbd in Frameworks */,
+				450CCCA429C3CA2E0008BA3E /* Foundation.framework in Frameworks */,
+				450CCCA229C3CA280008BA3E /* CoreVideo.framework in Frameworks */,
+				450CCCA029C3CA230008BA3E /* CoreText.framework in Frameworks */,
+				450CCC9E29C3CA1D0008BA3E /* CoreMedia.framework in Frameworks */,
+				450CCC9C29C3CA160008BA3E /* CoreGraphics.framework in Frameworks */,
+				450CCC9A29C3CA110008BA3E /* CoreFoundation.framework in Frameworks */,
+				450CCC9829C3CA0C0008BA3E /* CFNetwork.framework in Frameworks */,
+				450CCC9629C3CA050008BA3E /* AVFoundation.framework in Frameworks */,
+				450CCC9429C3C9FC0008BA3E /* AudioToolbox.framework in Frameworks */,
 				45EF348429C21BC800DCDAFC /* Swifter in Frameworks */,
+				9BA0BBFE671CC6CC14EB63F5 /* Pods_DisCeri.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4530325229C74C910052A22B /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				4530325329C74C910052A22B /* ice-spm-3.7.8 */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 		45EDA8E32992646E00C03356 = {
 			isa = PBXGroup;
 			children = (
+				4530325029C749D10052A22B /* Package.swift */,
+				4530325229C74C910052A22B /* Packages */,
 				45EDA8EE2992646E00C03356 /* DisCeriUI */,
 				45EDA8ED2992646E00C03356 /* Products */,
+				B41FA81634108BF8EA5C403D /* Pods */,
+				5A4068B3C2624082D151D294 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -73,9 +176,12 @@
 			children = (
 				45EDA8EF2992646E00C03356 /* DisCeriUIApp.swift */,
 				45EDA8F12992646E00C03356 /* ContentView.swift */,
+				4530325529C74EC40052A22B /* Printer.swift */,
 				454F3B7029C36D240019A6EC /* AudioRecorder.swift */,
 				45EF348029C21B6F00DCDAFC /* ASRSoapRequest.swift */,
 				4519F76929AB7C43009414CA /* MusicPlayerManager.swift */,
+				450CCCBA29C3CB5F0008BA3E /* ClientVLC.swift */,
+				4530324E29C735810052A22B /* ImportAudioFromFilesApp.swift */,
 				45EDA8F32992647300C03356 /* Assets.xcassets */,
 				454CF595299E9AF6002DDD54 /* SpeechRecognizer.swift */,
 				45D468142996834900573475 /* BasicFunctions.swift */,
@@ -84,6 +190,9 @@
 				45EF348529C21DEB00DCDAFC /* MacronASRTestPart.mp3 */,
 				45A2D87829C2FDB800F125DB /* AntoineDanielASRTestPart.mp3 */,
 				4519F76529AB6F41009414CA /* Lomepal.mp3 */,
+				450CCCB829C3CACE0008BA3E /* header.m */,
+				450CCCB729C3CACD0008BA3E /* DisCeri-Bridging-Header.h */,
+				4530325B29C7536B0052A22B /* Config.client */,
 			);
 			path = DisCeriUI;
 			sourceTree = "<group>";
@@ -96,6 +205,41 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		5A4068B3C2624082D151D294 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				450CCCB529C3CA5A0008BA3E /* UIKit.framework */,
+				450CCCB329C3CA530008BA3E /* VideoToolbox.framework */,
+				450CCCB129C3CA4F0008BA3E /* Security.framework */,
+				450CCCAF29C3CA4A0008BA3E /* QuartzCore.framework */,
+				450CCCAD29C3CA460008BA3E /* OpenGLES.framework */,
+				450CCCAB29C3CA410008BA3E /* libxml2.tbd */,
+				450CCCA929C3CA3C0008BA3E /* libiconv.tbd */,
+				450CCCA729C3CA380008BA3E /* libc++.tbd */,
+				450CCCA529C3CA340008BA3E /* libbz2.tbd */,
+				450CCCA329C3CA2E0008BA3E /* Foundation.framework */,
+				450CCCA129C3CA280008BA3E /* CoreVideo.framework */,
+				450CCC9F29C3CA230008BA3E /* CoreText.framework */,
+				450CCC9D29C3CA1D0008BA3E /* CoreMedia.framework */,
+				450CCC9B29C3CA160008BA3E /* CoreGraphics.framework */,
+				450CCC9929C3CA110008BA3E /* CoreFoundation.framework */,
+				450CCC9729C3CA0C0008BA3E /* CFNetwork.framework */,
+				450CCC9529C3CA050008BA3E /* AVFoundation.framework */,
+				450CCC9329C3C9FC0008BA3E /* AudioToolbox.framework */,
+				28E713AAF4B6D43484DDA1A2 /* Pods_DisCeri.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B41FA81634108BF8EA5C403D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				83A05B17DB2744070128DB1F /* Pods-DisCeri.debug.xcconfig */,
+				A80842524F7432E62F7E4299 /* Pods-DisCeri.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -103,17 +247,21 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 45EDA8FA2992647300C03356 /* Build configuration list for PBXNativeTarget "DisCeri" */;
 			buildPhases = (
+				1864062D5219772BE5CA5C9A /* [CP] Check Pods Manifest.lock */,
 				45EDA8E82992646E00C03356 /* Sources */,
 				45EDA8E92992646E00C03356 /* Frameworks */,
 				45EDA8EA2992646E00C03356 /* Resources */,
+				A42D37B971E17386507D9AB6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
+				4530325429C74D0A0052A22B /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
 			name = DisCeri;
 			packageProductDependencies = (
 				45EF348329C21BC800DCDAFC /* Swifter */,
+				4530325929C74FF20052A22B /* Ice */,
 			);
 			productName = TestUI;
 			productReference = 45EDA8EC2992646E00C03356 /* DisCeri.app */;
@@ -131,6 +279,7 @@
 				TargetAttributes = {
 					45EDA8EB2992646E00C03356 = {
 						CreatedOnToolsVersion = 14.1;
+						LastSwiftMigration = 1410;
 					};
 				};
 			};
@@ -162,6 +311,7 @@
 			files = (
 				45A2D87929C2FDB800F125DB /* AntoineDanielASRTestPart.mp3 in Resources */,
 				45EF348629C21DEB00DCDAFC /* MacronASRTestPart.mp3 in Resources */,
+				4530325C29C7536B0052A22B /* Config.client in Resources */,
 				45EDA8F72992647300C03356 /* Preview Assets.xcassets in Resources */,
 				45EDA8F42992647300C03356 /* Assets.xcassets in Resources */,
 				4519F76629AB6F41009414CA /* Lomepal.mp3 in Resources */,
@@ -170,17 +320,64 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1864062D5219772BE5CA5C9A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DisCeri-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A42D37B971E17386507D9AB6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DisCeri/Pods-DisCeri-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DisCeri/Pods-DisCeri-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DisCeri/Pods-DisCeri-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		45EDA8E82992646E00C03356 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4530325129C749D10052A22B /* Package.swift in Sources */,
+				450CCCB929C3CACE0008BA3E /* header.m in Sources */,
 				450F1E0D29B0FA0B00A21A17 /* NaturalLanguageProcesser.swift in Sources */,
 				45D468152996834900573475 /* BasicFunctions.swift in Sources */,
+				450CCCBB29C3CB5F0008BA3E /* ClientVLC.swift in Sources */,
+				4530325629C74EC40052A22B /* Printer.swift in Sources */,
 				454CF596299E9AF6002DDD54 /* SpeechRecognizer.swift in Sources */,
 				45EDA8F22992646E00C03356 /* ContentView.swift in Sources */,
 				45EF348129C21B6F00DCDAFC /* ASRSoapRequest.swift in Sources */,
 				454F3B7129C36D240019A6EC /* AudioRecorder.swift in Sources */,
+				4530324F29C735810052A22B /* ImportAudioFromFilesApp.swift in Sources */,
 				4519F76A29AB7C43009414CA /* MusicPlayerManager.swift in Sources */,
 				45EDA8F02992646E00C03356 /* DisCeriUIApp.swift in Sources */,
 			);
@@ -305,9 +502,11 @@
 		};
 		45EDA8FB2992647300C03356 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 83A05B17DB2744070128DB1F /* Pods-DisCeri.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DisCeriUI/Preview Content\"";
@@ -329,6 +528,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ST.TestUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "DisCeriUI/DisCeri-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -336,9 +537,11 @@
 		};
 		45EDA8FC2992647300C03356 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A80842524F7432E62F7E4299 /* Pods-DisCeri.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DisCeriUI/Preview Content\"";
@@ -360,6 +563,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ST.TestUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "DisCeriUI/DisCeri-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -400,6 +604,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4530325929C74FF20052A22B /* Ice */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Ice;
+		};
 		45EF348329C21BC800DCDAFC /* Swifter */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 45EF348229C21BC800DCDAFC /* XCRemoteSwiftPackageReference "swifter" */;
