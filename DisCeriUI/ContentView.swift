@@ -476,7 +476,7 @@ struct CustomMenu: View {
     @State private var Extras = false
     @State private var Settings = false
     
-    @State var importAudio = ImportAudio()
+    @State var importAudio = ImportAudioViewController()
     @State var helloWorldIce = ClientVLC()
     @State var uploadAudioFile = ClientVLC()
     
@@ -506,7 +506,8 @@ struct CustomMenu: View {
                             TapGesture()
                                 .onEnded({
                                     // self.Music.toggle()
-                                    helloWorldIce.helloWorld()
+                                    // helloWorldIce.helloWorld()
+                                    importAudio.importTapped()
                                 })
                         )
                     
