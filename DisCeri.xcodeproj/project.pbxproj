@@ -47,6 +47,7 @@
 		45EF348429C21BC800DCDAFC /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = 45EF348329C21BC800DCDAFC /* Swifter */; };
 		45EF348629C21DEB00DCDAFC /* MacronASRTestPart.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 45EF348529C21DEB00DCDAFC /* MacronASRTestPart.mp3 */; };
 		9BA0BBFE671CC6CC14EB63F5 /* Pods_DisCeri.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E713AAF4B6D43484DDA1A2 /* Pods_DisCeri.framework */; };
+		C139580E29D9D28C005DF995 /* NLPSoapRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C139580D29D9D28C005DF995 /* NLPSoapRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -109,6 +110,7 @@
 		45EF348529C21DEB00DCDAFC /* MacronASRTestPart.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MacronASRTestPart.mp3; sourceTree = "<group>"; };
 		83A05B17DB2744070128DB1F /* Pods-DisCeri.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DisCeri.debug.xcconfig"; path = "Target Support Files/Pods-DisCeri/Pods-DisCeri.debug.xcconfig"; sourceTree = "<group>"; };
 		A80842524F7432E62F7E4299 /* Pods-DisCeri.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DisCeri.release.xcconfig"; path = "Target Support Files/Pods-DisCeri/Pods-DisCeri.release.xcconfig"; sourceTree = "<group>"; };
+		C139580D29D9D28C005DF995 /* NLPSoapRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLPSoapRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +181,7 @@
 				4530325529C74EC40052A22B /* Printer.swift */,
 				454F3B7029C36D240019A6EC /* AudioRecorder.swift */,
 				45EF348029C21B6F00DCDAFC /* ASRSoapRequest.swift */,
+				C139580D29D9D28C005DF995 /* NLPSoapRequest.swift */,
 				4519F76929AB7C43009414CA /* MusicPlayerManager.swift */,
 				450CCCBA29C3CB5F0008BA3E /* ClientVLC.swift */,
 				4530324E29C735810052A22B /* ImportAudioFromFilesApp.swift */,
@@ -368,6 +371,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4530325129C749D10052A22B /* Package.swift in Sources */,
+				C139580E29D9D28C005DF995 /* NLPSoapRequest.swift in Sources */,
 				450CCCB929C3CACE0008BA3E /* header.m in Sources */,
 				450F1E0D29B0FA0B00A21A17 /* NaturalLanguageProcesser.swift in Sources */,
 				45D468152996834900573475 /* BasicFunctions.swift in Sources */,
