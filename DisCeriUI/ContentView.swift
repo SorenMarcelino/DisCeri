@@ -356,7 +356,12 @@ struct DisplayContent: View {
                         ForEach(viewModel.albums) { album in
                             GeometryReader { geo in
                                 VStack {
-                                    Image(uiImage: album.image)
+                                    Text(album)
+                                        .font(.title3)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(Color.white)
+                                        .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 10), axis: (x: 0, y: 1, z: 0))
+                                    /*Image(uiImage: album.image)
                                         .resizable()
                                         .frame(width: 260, height: 260)
                                         .cornerRadius(15)
@@ -372,7 +377,7 @@ struct DisplayContent: View {
                                         .font(.subheadline)
                                         .fontWeight(.light)
                                         .foregroundColor(Color.white)
-                                        .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 10), axis: (x: 0, y: 1, z: 0))
+                                        .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 10), axis: (x: 0, y: 1, z: 0))*/
                                 }
                             }
                             .frame(width: 150)
