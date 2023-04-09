@@ -327,85 +327,64 @@ struct WheelView: View {
 }
 
 
+struct Album: Identifiable {
+    let id: Int
+    let name: String
+    let artist: String
+    let image: UIImage
+}
+
+class AlbumViewModel: ObservableObject {
+    @Published var albums: [String] = []
+    
+    func fetchAlbums() {
+        let musicHandler = new MusicListHandler()
+        albums = musicHandler.getMusic()
+    }
+}
+
 
 //Geometry Reader : Album View
 struct DisplayContent: View {
-     
-    
-   // Dummy Data
-    var images : [UIImage]! = [
-        UIImage(named: "album1")!,
-        UIImage(named: "album2")!,
-        UIImage(named: "album3")!,
-        UIImage(named: "album4")!,
-        UIImage(named: "album5")!,
-        UIImage(named: "album6")!,
-        UIImage(named: "album7")!,
-    ]
-
-
-    let albumName : [String] = ["Music To Be..",
-                                "Justice",
-                                "Dua Lipa",
-                                "X",
-                                "Natural Causes",
-                                "Escape" ,
-                                "Red"]
-    
-    let albumArtist : [String] = ["Eminem",
-                                  "Justin Bieber",
-                                  "Dua Lipa",
-                                  "Ed Sheeran",
-                                  "Skyler Grey",
-                                  "Enrique Iglesias" ,
-                                  "Taylor Swift"]
+    @StateObject var viewModel = AlbumViewModel()
     
     var body: some View {
-        
-        
-        ZStack{
-        GeometryReader { fullView in
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack (spacing: 100) {
-                    ForEach(0..<20) { index in
-                        GeometryReader { geo in
-                            
-                            VStack{
-                            Image(uiImage:self.images[index % 7])
-                                .resizable()
-                                .frame(width: 260, height: 260)
-                                .cornerRadius(15)
-                                .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 10), axis: (x: 0, y: 1, z: 0))
-                            
-                                
-                                
-                                
-                                Text(self.albumArtist[index % 7])
-                                    .font(.title3)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(Color.white)
-                                    .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 10), axis: (x: 0, y: 1, z: 0))
-                                
-                                
-                                Text(self.albumName[index % 7])
-                                    .font(.subheadline)
-                                    .fontWeight(.light)
-                                    .foregroundColor(Color.white)
-                                    .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 10), axis: (x: 0, y: 1, z: 0))
-                           
+        ZStack {
+            GeometryReader { fullView in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 100) {
+                        ForEach(viewModel.albums) { album in
+                            GeometryReader { geo in
+                                VStack {
+                                    Image(uiImage: album.image)
+                                        .resizable()
+                                        .frame(width: 260, height: 260)
+                                        .cornerRadius(15)
+                                        .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 10), axis: (x: 0, y: 1, z: 0))
+                                    
+                                    Text(album.artist)
+                                        .font(.title3)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(Color.white)
+                                        .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 10), axis: (x: 0, y: 1, z: 0))
+                                    
+                                    Text(album.name)
+                                        .font(.subheadline)
+                                        .fontWeight(.light)
+                                        .foregroundColor(Color.white)
+                                        .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 10), axis: (x: 0, y: 1, z: 0))
+                                }
                             }
-                          
+                            .frame(width: 150)
                         }
-                        .frame(width: 150)
                     }
+                    .padding(.horizontal, (fullView.size.width - 150) / 2)
                 }
-                .padding(.horizontal, (fullView.size.width - 150) / 2)
-            
             }
+            .ignoresSafeArea()
         }
-        .ignoresSafeArea()
-          
-        
+        .onAppear {
+            viewModel.fetchAlbums()
         }
     }
 }
