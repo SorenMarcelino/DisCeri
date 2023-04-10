@@ -12,8 +12,8 @@ import Ice
 
 class ClientVLC: NSObject, VLCMediaPlayerDelegate {
     let ipSoren = "192.168.1.154"
-    let ipCERI = "10.126.2.87"
-    
+    let ipCERI = "10.126.1.179"
+        
     func helloWorld() -> UInt32 {
         do {
             let communicator = try Ice.initialize(CommandLine.arguments)
@@ -30,14 +30,17 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
         return 0
     }
     
-    func uploadAudioFile() {
+    func uploadAudioFile(url: URL) {
         print(FileManager.default.currentDirectoryPath)
-        guard let path = Bundle.main.path(forResource: "Lomepal", ofType: "mp3") else {
+        /*guard let path = Bundle.main.path(forResource: "Lomepal", ofType: "mp3") else {
             print("Error: Failed to find the music file.")
             return
-        }
+        }*/
         
         do {
+            url.startAccessingSecurityScopedResource()
+            let data = try Data(contentsOf: url)
+            print("Je vois l'audio")
             let communicator = try Ice.initialize(CommandLine.arguments)
             defer {
                 communicator.destroy()
@@ -45,8 +48,8 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
 
             let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipSoren) -p 10000")!, type: PrinterPrx.self)
 
-            if let file = FileHandle(forReadingAtPath: path) {
-                let fileSize = (try? FileManager.default.attributesOfItem(atPath: path)[.size] as? Int64) ?? 0
+            if let file = FileHandle(forReadingAtPath: url.path) {
+                let fileSize = (try? FileManager.default.attributesOfItem(atPath: url.path)[.size] as? Int64) ?? 0
                 let (quotient, remainder) = fileSize.quotientAndRemainder(dividingBy: 102400) // 100kB max = 102400 Bytes
 
                 
@@ -65,15 +68,66 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
                 }
                 
                 file.closeFile()
-                try printer.uploadFile(id: id, filename: "Lomepal.mp3")
+                let fileNameWithoutExtension = url.deletingPathExtension().lastPathComponent
+                try printer.uploadFile(id: id, filename: "\(fileNameWithoutExtension).mp3")
             }
+            url.stopAccessingSecurityScopedResource()
         } catch {
             print("Error: \(error)\n")
             exit(1)
         }
     }
     
-    /*func setupPlayer() {
+    func uploadCoverFile(url: URL) {
+        print(FileManager.default.currentDirectoryPath)
+        /*guard let path = Bundle.main.path(forResource: "Lomepal", ofType: "mp3") else {
+            print("Error: Failed to find the music file.")
+            return
+        }*/
+        
+        do {
+            url.startAccessingSecurityScopedResource()
+            let data = try Data(contentsOf: url)
+            print("Je vois la pochette")
+            let communicator = try Ice.initialize(CommandLine.arguments)
+            defer {
+                communicator.destroy()
+            }
+
+            let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipSoren) -p 10000")!, type: PrinterPrx.self)
+
+            if let file = FileHandle(forReadingAtPath: url.path) {
+                let fileSize = (try? FileManager.default.attributesOfItem(atPath: url.path)[.size] as? Int64) ?? 0
+                let (quotient, remainder) = fileSize.quotientAndRemainder(dividingBy: 102400) // 100kB max = 102400 Bytes
+
+                
+                let id = try printer.getNewIndex()
+                
+                for i in 0..<quotient {
+                    file.seek(toFileOffset: UInt64(i * 102400))
+                    let part = file.readData(ofLength: 102400)
+                    try printer.uploadPart(id: id, part: part)
+                }
+                
+                if remainder > 0 {
+                    file.seek(toFileOffset: UInt64(quotient * 102400))
+                    let part = file.readData(ofLength: Int(remainder))
+                    try printer.uploadPart(id: id, part: part)
+                }
+                
+                file.closeFile()
+                let fileNameWithoutExtension = url.deletingPathExtension().lastPathComponent
+                let pathExtension = url.pathExtension
+                try printer.uploadFile(id: id, filename: "\(fileNameWithoutExtension).\(pathExtension)")
+            }
+            url.stopAccessingSecurityScopedResource()
+        } catch {
+            print("Error: \(error)\n")
+            exit(1)
+        }
+    }
+    
+        /*func setupPlayer() {
         var player = VLCMediaPlayer()
         player.delegate = self
         let media = VLCMedia(url: URL(string: "http://\(ipSoren):5000/music")!)
@@ -82,24 +136,17 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
         player.media = media
     }*/
     
-    // var player: VLCMediaPlayer!
+    //var player: VLCMediaPlayer!
     
-    func play() {
+    func play(songData: String, artistData: String) {
         do {
             let communicator = try Ice.initialize(CommandLine.arguments)
             defer {
                 communicator.destroy()
             }
-
-            let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipSoren) -p 10000")!, type: PrinterPrx.self)
-            try printer.playFile("Lomepal")
-
-            /*let player = VLCMediaPlayer()
-            player.delegate = self
-            let media = VLCMedia(url: URL(string: "rtsp://\(ipSoren):5000/music")!)
-            player.media = media
             
-            player.play()*/
+            let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipSoren) -p 10000")!, type: PrinterPrx.self)
+            try printer.playFile(songData)
             
         } catch {
             print("Error: \(error)\n")
@@ -110,10 +157,20 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
     }
     
     func pause() {
-        
     }
     
     func stop() {
-        
+        do {
+            let communicator = try Ice.initialize(CommandLine.arguments)
+            defer {
+                communicator.destroy()
+            }
+
+            let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipSoren) -p 10000")!, type: PrinterPrx.self)
+            try printer.stopFile()
+        } catch {
+            print("Error: \(error)\n")
+            exit(1)
+        }
     }
 }

@@ -33,13 +33,17 @@ class AudioRecorder {
         }
     }
 
-    func stopRecording() {
+    func stopRecording() -> URL{
+        print("Début Stop Recording")
+
         audioRecorder?.stop()
         audioRecorder = nil
         guard let audioURL = audioURL else {
-            return
+            return URL(string: "error")!
         }
-        ASRSoapRequest().requestASR(audioURL: audioURL)
+        //ASRSoapRequest().requestASR(audioURL: audioURL)
+        print("Fin Stop Recording")
+        return audioURL
     }
 
     private func getDocumentsDirectory() -> URL {

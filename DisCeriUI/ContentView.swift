@@ -9,6 +9,7 @@
 import SwiftUI
 import AVFoundation
 import MobileVLCKit
+import Ice
 
 extension Color {
     
@@ -91,7 +92,7 @@ struct ContentView_Previews: PreviewProvider {
 /*class PlayerVLC: NSObject, VLCMediaPlayerDelegate {
     
     let ipSoren = "192.168.1.154"
-    let ipCERI = "10.126.2.87"
+    let ipCERI = "10.126.1.179"
     let player = VLCMediaPlayer()
 
     override init() {
@@ -140,18 +141,37 @@ struct WheelView: View {
     @State var recordAudio = AudioRecorder()
     
     @State var playAudio = ClientVLC()
+    @State var isMusicPlaying = false
+    @State var isMusicPaused = false
+    @State var timeBeforePause = VLCTime()
     
+    @State var nlpResponse = NLPSoapRequest()
+            
     class PlayerVLC: NSObject, VLCMediaPlayerDelegate {
         let ipSoren = "192.168.1.154"
-        let ipCERI = "10.126.2.87"
+        let ipCERI = "10.126.1.179"
         let player = VLCMediaPlayer()
         
         override init() {
             super.init()
-            print("CA MARCHE")
             player.delegate = self
             let media = VLCMedia(url: URL(string: "rtsp://\(ipSoren):5777/music")!)
             player.media = media
+        }
+        
+        func play() {
+            player.play()
+            print(player.state)
+        }
+        
+        func pause() {
+            player.pause()
+            print(player.state)
+        }
+        
+        func resume() {
+            player.play()
+            print(player.state)
         }
     }
     
@@ -228,11 +248,52 @@ struct WheelView: View {
                         }.scaleEffect(0.326)
                             .onDisappear() {
                                 //speechRecognizer.recordButtonTapped() // Speech
-                                recordAudio.stopRecording()
+                                var finalActionData: String = ""
+                                let semaphore = DispatchSemaphore(value: 0)
+                                DispatchQueue.global().sync {
+                                    let audioURL = recordAudio.stopRecording() // Arrêt de l'enregistrement
+                                    print(audioURL)
+                                    let finalTranscriptionData = ASRSoapRequest().requestASR(audioURL: audioURL)
+                                    print("Final TranscriptionData : \(finalTranscriptionData)")
+                                    finalActionData = NLPSoapRequest().requestNLP(text: finalTranscriptionData)
+                                    print("Final ActionData : \(finalActionData)")
+                                    semaphore.signal()
+                                }
+                                
+                                semaphore.wait()
+                                
                                 isRotating = false
+                                    do {
+                                        let communicator = try Ice.initialize(CommandLine.arguments)
+                                        defer {
+                                            communicator.destroy()
+                                        }
+                                        
+                                        let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h 192.168.1.154 -p 10000")!, type: PrinterPrx.self)
+                                        
+                                        
+                                        if finalActionData == "PlayMusic" || finalActionData == "PlaySong" || finalActionData == "PlayArtist" || finalActionData == "PlaySongAndArtist" {
+                                            if try printer.isPlaying() == false {
+                                                while try printer.isPlaying() == false {
+                                                    print("Pas encore...")
+                                                }
+                                                playerVLC.play()
+                                            }
+                                        }
+                                        
+                                    } catch {
+                                        print("Error: \(error)\n")
+                                        exit(1)
+                                    }
+                                
                                 //playMusic.playMusic()
                                 //print("From Front : " + speechRecognizer.transcript) // Speech // To delete on prod
                                 //tokenizer.tokentizer(transcription: speechRecognizer.transcript)
+
+                                print("Fini")
+                                //sleep(5)
+                                //playerVLC.play(
+                                
                             }
                 }
                 
@@ -264,13 +325,44 @@ struct WheelView: View {
                     .gesture(
                         TapGesture()
                             .onEnded({
-                                // self.pauseplay.toggle()
-                                print("Tap play")
-                                playAudio.play()
-                                playerVLC.player.play()
+                                self.pauseplay.toggle()
+                                /*switch (isPlaying, isPaused) {
+                                case (false, false):
+                                    print("Play")
+                                    isPlaying = true
+                                    playAudio.play(songData: "Trop Beau", artistData: "")
+                                    //playerVLC.player.play()
+                                    playerVLC.play()
+                                case (true, false):
+                                    print("Pause")
+                                    isPlaying = false
+                                    isPaused = true
+                                    //timeBeforePause = playerVLC.player.time
+                                    //playerVLC.player.pause()
+                                    playerVLC.pause()
+                                case (false, true):
+                                    print("Resume")
+                                    isPlaying = true
+                                    isPaused = false
+                                    //print(timeBeforePause.intValue)
+                                    //playerVLC.player.jumpForward(timeBeforePause.intValue)
+                                    //playerVLC.player.play()
+                                    playerVLC.resume()
+                                case (true, true):
+                                    print("🤨")
+                                }
+                                print("isPlaying : \(isPlaying) - isPaused : \(isPaused)")*/
                             })
-                    
-                    )
+                    ).onLongPressGesture {
+                        self.pauseplay.toggle()
+                        /*if isPlaying == true || isPaused == true {
+                            print("Stop")
+                            isPlaying = false
+                            isPaused = false
+                            playAudio.stop()
+                            playerVLC.player.stop()
+                        }*/
+                    }
                 }
                 
                 ZStack{
@@ -338,7 +430,7 @@ class AlbumViewModel: ObservableObject {
     @Published var albums: [String] = []
     
     func fetchAlbums() {
-        let musicHandler = new MusicListHandler()
+        let musicHandler = MusicListHandler()
         albums = musicHandler.getMusic()
     }
 }
@@ -353,7 +445,7 @@ struct DisplayContent: View {
             GeometryReader { fullView in
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 100) {
-                        ForEach(viewModel.albums) { album in
+                        ForEach(viewModel.albums, id: \.self) { album in
                             GeometryReader { geo in
                                 VStack {
                                     Text(album)
@@ -365,9 +457,9 @@ struct DisplayContent: View {
                                         .resizable()
                                         .frame(width: 260, height: 260)
                                         .cornerRadius(15)
-                                        .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 10), axis: (x: 0, y: 1, z: 0))
+                                        .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 10), axis: (x: 0, y: 1, z: 0))*/
                                     
-                                    Text(album.artist)
+                                    /*Text(album.artist)
                                         .font(.title3)
                                         .fontWeight(.bold)
                                         .foregroundColor(Color.white)
@@ -477,7 +569,7 @@ struct CustomMenu: View {
                     
                 Image(systemName: "applelogo")
                         .foregroundColor(.black.opacity(0.8))
-                Text("IPod")
+                Text("DisCERI")
                     .font(.title2)
                 }
                 
@@ -508,7 +600,7 @@ struct CustomMenu: View {
                                 .onEnded({
                                     //self.Photos.toggle()
                                     print("Tap tap")
-                                    uploadAudioFile.uploadAudioFile()
+                                    //uploadAudioFile.uploadAudioFile()
                                 })
                         
                         )
