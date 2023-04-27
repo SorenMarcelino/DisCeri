@@ -150,19 +150,22 @@ struct WheelView: View {
     class PlayerVLC: NSObject, VLCMediaPlayerDelegate {
         let ipSoren = "192.168.1.154"
         let ipCERI = "10.126.1.179"
-        let player = VLCMediaPlayer()
+        var player = VLCMediaPlayer()
         let ipAddress = BasicFunctions().getWifiIpAdress()
         
-        override init() {
+        /*override init() {
             super.init()
             print("Init")
             player.delegate = self
             let media = VLCMedia(url: URL(string: "rtsp://\(ipSoren):5777/music")!)
             player.media = media
-        }
+        }*/
         
         func play() {
             print("Je suis là")
+            player.delegate = self
+            let media = VLCMedia(url: URL(string: "rtsp://\(ipSoren):5777/music")!)
+            player.media = media
             player.play()
             print(player.state)
         }
@@ -299,6 +302,14 @@ struct WheelView: View {
                                         if try printer.isPlaying() == true {
                                             playerVLC.stop()
                                         }
+                                    } else if finalActionData == "Pause" {
+                                        //if try printer.isPlaying() == true {
+                                            playerVLC.pause()
+                                        //}
+                                    } else if finalActionData == "Resume" {
+                                        //if try printer.isPlaying() == true {
+                                            playerVLC.play()
+                                        //}
                                     }
                                     
                                 } catch {
