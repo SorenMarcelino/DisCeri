@@ -94,9 +94,13 @@ class NLPSoapRequest: ObservableObject {
                     self.clientVLC.play(songData: self.songData, artistData: self.artistData)
                 } else if self.actionData == "Stop" {
                     self.clientVLC.stop()
+                } else if self.actionData == "Pause" {
+                    self.clientVLC.pause()
+                } else if self.actionData == "Resume" {
+                    self.clientVLC.resume()
                 }
                 semaphore.signal()
-
+                
             }
             task.resume()
             semaphore.wait()

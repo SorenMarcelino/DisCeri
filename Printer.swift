@@ -59,6 +59,14 @@ public struct PrinterTraits: Ice.SliceTraits {
 ///
 ///  - stopFileAsync: 
 ///
+///  - pause: 
+///
+///  - pauseAsync: 
+///
+///  - resume: 
+///
+///  - resumeAsync: 
+///
 ///  - uploadPart: 
 ///
 ///  - uploadPartAsync: 
@@ -176,6 +184,14 @@ public extension Ice.InputStream {
 ///  - stopFile: 
 ///
 ///  - stopFileAsync: 
+///
+///  - pause: 
+///
+///  - pauseAsync: 
+///
+///  - resume: 
+///
+///  - resumeAsync: 
 ///
 ///  - uploadPart: 
 ///
@@ -499,6 +515,64 @@ public extension PrinterPrx {
     }
 
     ///
+    /// - parameter context: `Ice.Context` - Optional request context.
+    func pause(context: Ice.Context? = nil) throws {
+        try _impl._invoke(operation: "pause",
+                          mode: .Normal,
+                          context: context)
+    }
+
+    ///
+    /// - parameter context: `Ice.Context` - Optional request context.
+    ///
+    /// - parameter sentOn: `Dispatch.DispatchQueue?` - Optional dispatch queue used to
+    ///   dispatch the sent callback.
+    ///
+    /// - parameter sentFlags: `Dispatch.DispatchWorkItemFlags?` - Optional dispatch flags used
+    ///   to dispatch the sent callback
+    ///
+    /// - parameter sent: `((Swift.Bool) -> Swift.Void)` - Optional sent callback.
+    ///
+    /// - returns: `PromiseKit.Promise<>` - The result of the operation
+    func pauseAsync(context: Ice.Context? = nil, sentOn: Dispatch.DispatchQueue? = nil, sentFlags: Dispatch.DispatchWorkItemFlags? = nil, sent: ((Swift.Bool) -> Swift.Void)? = nil) -> PromiseKit.Promise<Swift.Void> {
+        return _impl._invokeAsync(operation: "pause",
+                                  mode: .Normal,
+                                  context: context,
+                                  sentOn: sentOn,
+                                  sentFlags: sentFlags,
+                                  sent: sent)
+    }
+
+    ///
+    /// - parameter context: `Ice.Context` - Optional request context.
+    func resume(context: Ice.Context? = nil) throws {
+        try _impl._invoke(operation: "resume",
+                          mode: .Normal,
+                          context: context)
+    }
+
+    ///
+    /// - parameter context: `Ice.Context` - Optional request context.
+    ///
+    /// - parameter sentOn: `Dispatch.DispatchQueue?` - Optional dispatch queue used to
+    ///   dispatch the sent callback.
+    ///
+    /// - parameter sentFlags: `Dispatch.DispatchWorkItemFlags?` - Optional dispatch flags used
+    ///   to dispatch the sent callback
+    ///
+    /// - parameter sent: `((Swift.Bool) -> Swift.Void)` - Optional sent callback.
+    ///
+    /// - returns: `PromiseKit.Promise<>` - The result of the operation
+    func resumeAsync(context: Ice.Context? = nil, sentOn: Dispatch.DispatchQueue? = nil, sentFlags: Dispatch.DispatchWorkItemFlags? = nil, sent: ((Swift.Bool) -> Swift.Void)? = nil) -> PromiseKit.Promise<Swift.Void> {
+        return _impl._invokeAsync(operation: "resume",
+                                  mode: .Normal,
+                                  context: context,
+                                  sentOn: sentOn,
+                                  sentFlags: sentFlags,
+                                  sent: sent)
+    }
+
+    ///
     /// - parameter id: `Swift.Int32`
     ///
     /// - parameter part: `byteSeq`
@@ -677,12 +751,16 @@ public struct PrinterDisp: Ice.Disp {
             return try (servant as? Object ?? PrinterDisp.defaultObject)._iceD_ice_ping(incoming: request, current: current)
         case "isPlaying":
             return try servant._iceD_isPlaying(incoming: request, current: current)
+        case "pause":
+            return try servant._iceD_pause(incoming: request, current: current)
         case "playFile":
             return try servant._iceD_playFile(incoming: request, current: current)
         case "printString":
             return try servant._iceD_printString(incoming: request, current: current)
         case "renameFile":
             return try servant._iceD_renameFile(incoming: request, current: current)
+        case "resume":
+            return try servant._iceD_resume(incoming: request, current: current)
         case "stopFile":
             return try servant._iceD_stopFile(incoming: request, current: current)
         case "uploadFile":
@@ -747,6 +825,14 @@ public protocol Printer {
     func stopFile(current: Ice.Current) throws
 
     ///
+    /// - parameter current: `Ice.Current` - The Current object for the dispatch.
+    func pause(current: Ice.Current) throws
+
+    ///
+    /// - parameter current: `Ice.Current` - The Current object for the dispatch.
+    func resume(current: Ice.Current) throws
+
+    ///
     /// - parameter id: `Swift.Int32`
     ///
     /// - parameter part: `byteSeq`
@@ -790,6 +876,10 @@ public protocol Printer {
 ///  - playFile: 
 ///
 ///  - stopFile: 
+///
+///  - pause: 
+///
+///  - resume: 
 ///
 ///  - uploadPart: 
 ///
@@ -875,6 +965,22 @@ public extension Printer {
         try inS.readEmptyParams()
 
         try self.stopFile(current: current)
+
+        return inS.setResult()
+    }
+
+    func _iceD_pause(incoming inS: Ice.Incoming, current: Ice.Current) throws -> PromiseKit.Promise<Ice.OutputStream>? {
+        try inS.readEmptyParams()
+
+        try self.pause(current: current)
+
+        return inS.setResult()
+    }
+
+    func _iceD_resume(incoming inS: Ice.Incoming, current: Ice.Current) throws -> PromiseKit.Promise<Ice.OutputStream>? {
+        try inS.readEmptyParams()
+
+        try self.resume(current: current)
 
         return inS.setResult()
     }

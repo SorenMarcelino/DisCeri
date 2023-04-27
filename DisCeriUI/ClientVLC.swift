@@ -14,6 +14,12 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
     let ipSoren = "192.168.1.154"
     let ipCERI = "10.126.1.179"
     let ipAddress = BasicFunctions().getWifiIpAdress()
+    var resultClientVLC: Bool = false
+    
+    func getResultClientVLC() -> Bool {
+        print("get \(resultClientVLC)")
+        return resultClientVLC
+    }
         
     func helloWorld() -> UInt32 {
         do {
@@ -78,7 +84,7 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
             exit(1)
         }
     }
-    
+
     func uploadCoverFile(url: URL) {
         print(FileManager.default.currentDirectoryPath)
         /*guard let path = Bundle.main.path(forResource: "Lomepal", ofType: "mp3") else {
@@ -138,7 +144,6 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
     }*/
     
     //var player: VLCMediaPlayer!
-    
     func play(songData: String, artistData: String) {
         do {
             let communicator = try Ice.initialize(CommandLine.arguments)
@@ -147,17 +152,44 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
             }
             
             let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
-            try printer.playFile(songData)
+            resultClientVLC = try printer.playFile(songData)
             
+            print("oui \(resultClientVLC)")
         } catch {
             print("Error: \(error)\n")
             exit(1)
         }
-
-        //player?.play()
+        
     }
     
     func pause() {
+        do {
+            let communicator = try Ice.initialize(CommandLine.arguments)
+            defer {
+                communicator.destroy()
+            }
+
+            let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
+            try printer.pause()
+        } catch {
+            print("Error: \(error)\n")
+            exit(1)
+        }
+    }
+    
+    func resume() {
+        do {
+            let communicator = try Ice.initialize(CommandLine.arguments)
+            defer {
+                communicator.destroy()
+            }
+
+            let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
+            try printer.resume()
+        } catch {
+            print("Error: \(error)\n")
+            exit(1)
+        }
     }
     
     func stop() {

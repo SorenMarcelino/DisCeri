@@ -151,20 +151,14 @@ struct WheelView: View {
         let ipSoren = "192.168.1.154"
         let ipCERI = "10.126.1.179"
         var player = VLCMediaPlayer()
+        var isPaused = false
+        var pausedTime: VLCTime?
         let ipAddress = BasicFunctions().getWifiIpAdress()
-        
-        /*override init() {
-            super.init()
-            print("Init")
-            player.delegate = self
-            let media = VLCMedia(url: URL(string: "rtsp://\(ipSoren):5777/music")!)
-            player.media = media
-        }*/
         
         func play() {
             print("Je suis là")
             player.delegate = self
-            let media = VLCMedia(url: URL(string: "rtsp://\(ipSoren):5777/music")!)
+            let media = VLCMedia(url: URL(string: "rtsp://\(ipAddress):5777/music")!)
             player.media = media
             player.play()
             print(player.state)
@@ -176,8 +170,10 @@ struct WheelView: View {
         }
         
         func resume() {
+            let media = VLCMedia(url: URL(string: "rtsp://\(ipAddress):5777/music")!)
+            player.media = media
             player.play()
-            print(player.state.rawValue)
+            print(player.state)
         }
         
         func stop() {
@@ -288,12 +284,19 @@ struct WheelView: View {
                                         
                                     if finalActionData == "PlayMusic" || finalActionData == "PlaySong" || finalActionData == "PlayArtist" || finalActionData == "PlaySongAndArtist" {
                                         print("Je suis là 3 : \(try printer.isPlaying())")
+                                        
                                         if try printer.isPlaying() == false {
-                                            while try printer.isPlaying() == false {
-                                                print("Pas encore...")
+                                            var cpt = 50
+                                            while try printer.isPlaying() == false && cpt != 0 {
+                                                print(cpt)
+                                                cpt -= 1
                                             }
-                                            print("Je suis là 4")
-                                            playerVLC.play()
+                                            if cpt == 0 {
+                                                print("ALERT : Pas de musique correspondant à la demande")
+                                            } else {
+                                                print("Je suis là 4")
+                                                playerVLC.play()
+                                            }
                                         } else {
                                             print("Je suis là 4")
                                             playerVLC.play()
@@ -308,7 +311,7 @@ struct WheelView: View {
                                         //}
                                     } else if finalActionData == "Resume" {
                                         //if try printer.isPlaying() == true {
-                                            playerVLC.play()
+                                            playerVLC.resume()
                                         //}
                                     }
                                     
