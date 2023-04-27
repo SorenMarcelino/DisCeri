@@ -13,7 +13,8 @@ class NLPSoapRequest: ObservableObject {
     var actionData: String = ""
     var songData: String = ""
     var artistData: String = ""
-        
+    let ipAddress = BasicFunctions().getWifiIpAdress()
+    
     func requestNLP(text: String) -> String {
         print("Début NLP Request")
             /*guard let url = Bundle.main.url(forResource: "MacronASRTestPart", withExtension: "mp3") else {
@@ -26,7 +27,7 @@ class NLPSoapRequest: ObservableObject {
                 print("Could not read str")
                 return
             }*/
-            
+        
             // Encode the audio file as base64
             let str = text
             print("Requete : \(str)")
@@ -46,7 +47,7 @@ class NLPSoapRequest: ObservableObject {
             let ipCERI = "10.126.1.179"
             let ipSoren = "192.168.1.154"
             let ipTheo = "192.168.1.12"
-            let urlString = "http://\(ipSoren):45877/action"
+            let urlString = "http://\(ipAddress):45877/action"
             
             // Create a URL request with the SOAP message as the body
             var request = URLRequest(url: URL(string: urlString)!)
@@ -88,8 +89,12 @@ class NLPSoapRequest: ObservableObject {
                 print("Action asked for : \(self.actionData)")
                 print("Song asked for : \(self.songData.capitalized)")
                 print("Artist asked for : \(self.artistData.capitalized)")
-                            
-                self.clientVLC.play(songData: self.songData, artistData: self.artistData)
+                      
+                if self.actionData == "PlayMusic" || self.actionData == "PlaySong" || self.actionData == "PlayArtist" || self.actionData == "PlaySongAndArtist" {
+                    self.clientVLC.play(songData: self.songData, artistData: self.artistData)
+                } else if self.actionData == "Stop" {
+                    self.clientVLC.stop()
+                }
                 semaphore.signal()
 
             }

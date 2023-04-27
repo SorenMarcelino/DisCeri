@@ -13,6 +13,7 @@ import Ice
 class ClientVLC: NSObject, VLCMediaPlayerDelegate {
     let ipSoren = "192.168.1.154"
     let ipCERI = "10.126.1.179"
+    let ipAddress = BasicFunctions().getWifiIpAdress()
         
     func helloWorld() -> UInt32 {
         do {
@@ -21,7 +22,7 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
                 communicator.destroy()
             }
 
-            let hello = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipSoren) -p 10000")!, type: PrinterPrx.self)
+            let hello = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
             try hello.printString("Bonjour")
         } catch {
             print("Error: \(error)\n")
@@ -46,7 +47,7 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
                 communicator.destroy()
             }
 
-            let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipSoren) -p 10000")!, type: PrinterPrx.self)
+            let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
 
             if let file = FileHandle(forReadingAtPath: url.path) {
                 let fileSize = (try? FileManager.default.attributesOfItem(atPath: url.path)[.size] as? Int64) ?? 0
@@ -94,7 +95,7 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
                 communicator.destroy()
             }
 
-            let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipSoren) -p 10000")!, type: PrinterPrx.self)
+            let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
 
             if let file = FileHandle(forReadingAtPath: url.path) {
                 let fileSize = (try? FileManager.default.attributesOfItem(atPath: url.path)[.size] as? Int64) ?? 0
@@ -145,7 +146,7 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
                 communicator.destroy()
             }
             
-            let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipSoren) -p 10000")!, type: PrinterPrx.self)
+            let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
             try printer.playFile(songData)
             
         } catch {
@@ -166,7 +167,7 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
                 communicator.destroy()
             }
 
-            let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipSoren) -p 10000")!, type: PrinterPrx.self)
+            let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
             try printer.stopFile()
         } catch {
             print("Error: \(error)\n")

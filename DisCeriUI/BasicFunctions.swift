@@ -15,6 +15,13 @@ class BasicFunctions: NSObject {
         return "Ceci est un test de debug"
     }
     
+    public func getWifiIpAdress() -> String {
+        let ipSoren = "192.168.1.154"
+        let ipCERI = "10.126.1.179"
+        
+        return ipSoren;
+    }
+    
     var audioPlayer: AVAudioPlayer?
     func playSound(sound: String, type: String){
         if let path = Bundle.main.path(forResource: sound, ofType: type){

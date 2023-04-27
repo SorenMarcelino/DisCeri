@@ -11,6 +11,7 @@ import Swifter
 class ASRSoapRequest {
     var nlpSoapRequest = NLPSoapRequest()
     var transcriptionData: String = ""
+    let ipAddress = BasicFunctions().getWifiIpAdress()
     
     func requestASR(audioURL: URL) -> String{
         print("Début ASR Request")
@@ -44,7 +45,7 @@ class ASRSoapRequest {
         let ipCERI = "10.126.1.179"
         let ipSoren = "192.168.1.154"
         let ipTheo = "192.168.1.12"
-        let urlString = "http://\(ipSoren):45876/transcribe"
+        let urlString = "http://\(ipAddress):45876/transcribe"
         
         // Create a URL request with the SOAP message as the body
         var request = URLRequest(url: URL(string: urlString)!)

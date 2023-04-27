@@ -151,15 +151,18 @@ struct WheelView: View {
         let ipSoren = "192.168.1.154"
         let ipCERI = "10.126.1.179"
         let player = VLCMediaPlayer()
+        let ipAddress = BasicFunctions().getWifiIpAdress()
         
         override init() {
             super.init()
+            print("Init")
             player.delegate = self
             let media = VLCMedia(url: URL(string: "rtsp://\(ipSoren):5777/music")!)
             player.media = media
         }
         
         func play() {
+            print("Je suis là")
             player.play()
             print(player.state)
         }
@@ -171,6 +174,11 @@ struct WheelView: View {
         
         func resume() {
             player.play()
+            print(player.state.rawValue)
+        }
+        
+        func stop() {
+            player.stop()
             print(player.state)
         }
     }
@@ -253,38 +261,50 @@ struct WheelView: View {
                                 DispatchQueue.global().sync {
                                     let audioURL = recordAudio.stopRecording() // Arrêt de l'enregistrement
                                     print(audioURL)
+                                    
                                     let finalTranscriptionData = ASRSoapRequest().requestASR(audioURL: audioURL)
                                     print("Final TranscriptionData : \(finalTranscriptionData)")
+                                    
                                     finalActionData = NLPSoapRequest().requestNLP(text: finalTranscriptionData)
                                     print("Final ActionData : \(finalActionData)")
+                                    
                                     semaphore.signal()
                                 }
                                 
                                 semaphore.wait()
                                 
                                 isRotating = false
-                                    do {
-                                        let communicator = try Ice.initialize(CommandLine.arguments)
-                                        defer {
-                                            communicator.destroy()
-                                        }
-                                        
-                                        let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h 192.168.1.154 -p 10000")!, type: PrinterPrx.self)
-                                        
-                                        
-                                        if finalActionData == "PlayMusic" || finalActionData == "PlaySong" || finalActionData == "PlayArtist" || finalActionData == "PlaySongAndArtist" {
-                                            if try printer.isPlaying() == false {
-                                                while try printer.isPlaying() == false {
-                                                    print("Pas encore...")
-                                                }
-                                                playerVLC.play()
-                                            }
-                                        }
-                                        
-                                    } catch {
-                                        print("Error: \(error)\n")
-                                        exit(1)
+                                do {
+                                    let communicator = try Ice.initialize(CommandLine.arguments)
+                                    defer {
+                                        communicator.destroy()
                                     }
+                                    print("Je suis là 2 : \(finalActionData)")
+                                    let ipAddress = BasicFunctions().getWifiIpAdress()
+                                    let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
+                                        
+                                    if finalActionData == "PlayMusic" || finalActionData == "PlaySong" || finalActionData == "PlayArtist" || finalActionData == "PlaySongAndArtist" {
+                                        print("Je suis là 3 : \(try printer.isPlaying())")
+                                        if try printer.isPlaying() == false {
+                                            while try printer.isPlaying() == false {
+                                                print("Pas encore...")
+                                            }
+                                            print("Je suis là 4")
+                                            playerVLC.play()
+                                        } else {
+                                            print("Je suis là 4")
+                                            playerVLC.play()
+                                        }
+                                    } else if finalActionData == "Stop" {
+                                        if try printer.isPlaying() == true {
+                                            playerVLC.stop()
+                                        }
+                                    }
+                                    
+                                } catch {
+                                    print("Error: \(error)\n")
+                                    exit(1)
+                                }
                                 
                                 //playMusic.playMusic()
                                 //print("From Front : " + speechRecognizer.transcript) // Speech // To delete on prod
