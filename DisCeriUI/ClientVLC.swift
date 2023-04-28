@@ -144,7 +144,7 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
     }*/
     
     //var player: VLCMediaPlayer!
-    func play(songData: String, artistData: String) {
+    func playSong(songData: String) {
         do {
             let communicator = try Ice.initialize(CommandLine.arguments)
             defer {
@@ -159,7 +159,40 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
             print("Error: \(error)\n")
             exit(1)
         }
-        
+    }
+    
+    func playArtist(artistData: String) {
+        do {
+            let communicator = try Ice.initialize(CommandLine.arguments)
+            defer {
+                communicator.destroy()
+            }
+            
+            let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
+            resultClientVLC = try printer.playFileFromArtiste(artistData)
+            
+            print("oui \(resultClientVLC)")
+        } catch {
+            print("Error: \(error)\n")
+            exit(1)
+        }
+    }
+    
+    func playSongAndArtist(songData: String, artistData: String) {
+        do {
+            let communicator = try Ice.initialize(CommandLine.arguments)
+            defer {
+                communicator.destroy()
+            }
+            
+            let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
+            resultClientVLC = try printer.playFileFromSongAndArtiste(artist: artistData, son: songData)
+            
+            print("oui \(resultClientVLC)")
+        } catch {
+            print("Error: \(error)\n")
+            exit(1)
+        }
     }
     
     func pause() {

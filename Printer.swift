@@ -55,6 +55,14 @@ public struct PrinterTraits: Ice.SliceTraits {
 ///
 ///  - playFileAsync: 
 ///
+///  - playFileFromArtiste: 
+///
+///  - playFileFromArtisteAsync: 
+///
+///  - playFileFromSongAndArtiste: 
+///
+///  - playFileFromSongAndArtisteAsync: 
+///
 ///  - stopFile: 
 ///
 ///  - stopFileAsync: 
@@ -78,6 +86,10 @@ public struct PrinterTraits: Ice.SliceTraits {
 ///  - isPlaying: 
 ///
 ///  - isPlayingAsync: 
+///
+///  - scanFolder: 
+///
+///  - scanFolderAsync: 
 public protocol PrinterPrx: Ice.ObjectPrx {}
 
 private final class PrinterPrxI: Ice.ObjectPrxI, PrinterPrx {
@@ -181,6 +193,14 @@ public extension Ice.InputStream {
 ///
 ///  - playFileAsync: 
 ///
+///  - playFileFromArtiste: 
+///
+///  - playFileFromArtisteAsync: 
+///
+///  - playFileFromSongAndArtiste: 
+///
+///  - playFileFromSongAndArtisteAsync: 
+///
 ///  - stopFile: 
 ///
 ///  - stopFileAsync: 
@@ -204,6 +224,10 @@ public extension Ice.InputStream {
 ///  - isPlaying: 
 ///
 ///  - isPlayingAsync: 
+///
+///  - scanFolder: 
+///
+///  - scanFolderAsync: 
 public extension PrinterPrx {
     ///
     /// - parameter _: `Swift.String`
@@ -486,6 +510,110 @@ public extension PrinterPrx {
     }
 
     ///
+    /// - parameter _: `Swift.String`
+    ///
+    /// - parameter context: `Ice.Context` - Optional request context.
+    ///
+    /// - returns: `Swift.Bool`
+    func playFileFromArtiste(_ iceP_filename: Swift.String, context: Ice.Context? = nil) throws -> Swift.Bool {
+        return try _impl._invoke(operation: "playFileFromArtiste",
+                                 mode: .Normal,
+                                 write: { ostr in
+                                     ostr.write(iceP_filename)
+                                 },
+                                 read: { istr in
+                                     let iceP_returnValue: Swift.Bool = try istr.read()
+                                     return iceP_returnValue
+                                 },
+                                 context: context)
+    }
+
+    ///
+    /// - parameter _: `Swift.String`
+    ///
+    /// - parameter context: `Ice.Context` - Optional request context.
+    ///
+    /// - parameter sentOn: `Dispatch.DispatchQueue?` - Optional dispatch queue used to
+    ///   dispatch the sent callback.
+    ///
+    /// - parameter sentFlags: `Dispatch.DispatchWorkItemFlags?` - Optional dispatch flags used
+    ///   to dispatch the sent callback
+    ///
+    /// - parameter sent: `((Swift.Bool) -> Swift.Void)` - Optional sent callback.
+    ///
+    /// - returns: `PromiseKit.Promise<Swift.Bool>` - The result of the operation
+    func playFileFromArtisteAsync(_ iceP_filename: Swift.String, context: Ice.Context? = nil, sentOn: Dispatch.DispatchQueue? = nil, sentFlags: Dispatch.DispatchWorkItemFlags? = nil, sent: ((Swift.Bool) -> Swift.Void)? = nil) -> PromiseKit.Promise<Swift.Bool> {
+        return _impl._invokeAsync(operation: "playFileFromArtiste",
+                                  mode: .Normal,
+                                  write: { ostr in
+                                      ostr.write(iceP_filename)
+                                  },
+                                  read: { istr in
+                                      let iceP_returnValue: Swift.Bool = try istr.read()
+                                      return iceP_returnValue
+                                  },
+                                  context: context,
+                                  sentOn: sentOn,
+                                  sentFlags: sentFlags,
+                                  sent: sent)
+    }
+
+    ///
+    /// - parameter artist: `Swift.String`
+    ///
+    /// - parameter son: `Swift.String`
+    ///
+    /// - parameter context: `Ice.Context` - Optional request context.
+    ///
+    /// - returns: `Swift.Bool`
+    func playFileFromSongAndArtiste(artist iceP_artist: Swift.String, son iceP_son: Swift.String, context: Ice.Context? = nil) throws -> Swift.Bool {
+        return try _impl._invoke(operation: "playFileFromSongAndArtiste",
+                                 mode: .Normal,
+                                 write: { ostr in
+                                     ostr.write(iceP_artist)
+                                     ostr.write(iceP_son)
+                                 },
+                                 read: { istr in
+                                     let iceP_returnValue: Swift.Bool = try istr.read()
+                                     return iceP_returnValue
+                                 },
+                                 context: context)
+    }
+
+    ///
+    /// - parameter artist: `Swift.String`
+    ///
+    /// - parameter son: `Swift.String`
+    ///
+    /// - parameter context: `Ice.Context` - Optional request context.
+    ///
+    /// - parameter sentOn: `Dispatch.DispatchQueue?` - Optional dispatch queue used to
+    ///   dispatch the sent callback.
+    ///
+    /// - parameter sentFlags: `Dispatch.DispatchWorkItemFlags?` - Optional dispatch flags used
+    ///   to dispatch the sent callback
+    ///
+    /// - parameter sent: `((Swift.Bool) -> Swift.Void)` - Optional sent callback.
+    ///
+    /// - returns: `PromiseKit.Promise<Swift.Bool>` - The result of the operation
+    func playFileFromSongAndArtisteAsync(artist iceP_artist: Swift.String, son iceP_son: Swift.String, context: Ice.Context? = nil, sentOn: Dispatch.DispatchQueue? = nil, sentFlags: Dispatch.DispatchWorkItemFlags? = nil, sent: ((Swift.Bool) -> Swift.Void)? = nil) -> PromiseKit.Promise<Swift.Bool> {
+        return _impl._invokeAsync(operation: "playFileFromSongAndArtiste",
+                                  mode: .Normal,
+                                  write: { ostr in
+                                      ostr.write(iceP_artist)
+                                      ostr.write(iceP_son)
+                                  },
+                                  read: { istr in
+                                      let iceP_returnValue: Swift.Bool = try istr.read()
+                                      return iceP_returnValue
+                                  },
+                                  context: context,
+                                  sentOn: sentOn,
+                                  sentFlags: sentFlags,
+                                  sent: sent)
+    }
+
+    ///
     /// - parameter context: `Ice.Context` - Optional request context.
     func stopFile(context: Ice.Context? = nil) throws {
         try _impl._invoke(operation: "stopFile",
@@ -720,6 +848,45 @@ public extension PrinterPrx {
                                   sentFlags: sentFlags,
                                   sent: sent)
     }
+
+    ///
+    /// - parameter context: `Ice.Context` - Optional request context.
+    ///
+    /// - returns: `strList`
+    func scanFolder(context: Ice.Context? = nil) throws -> strList {
+        return try _impl._invoke(operation: "scanFolder",
+                                 mode: .Normal,
+                                 read: { istr in
+                                     let iceP_returnValue: strList = try istr.read()
+                                     return iceP_returnValue
+                                 },
+                                 context: context)
+    }
+
+    ///
+    /// - parameter context: `Ice.Context` - Optional request context.
+    ///
+    /// - parameter sentOn: `Dispatch.DispatchQueue?` - Optional dispatch queue used to
+    ///   dispatch the sent callback.
+    ///
+    /// - parameter sentFlags: `Dispatch.DispatchWorkItemFlags?` - Optional dispatch flags used
+    ///   to dispatch the sent callback
+    ///
+    /// - parameter sent: `((Swift.Bool) -> Swift.Void)` - Optional sent callback.
+    ///
+    /// - returns: `PromiseKit.Promise<strList>` - The result of the operation
+    func scanFolderAsync(context: Ice.Context? = nil, sentOn: Dispatch.DispatchQueue? = nil, sentFlags: Dispatch.DispatchWorkItemFlags? = nil, sent: ((Swift.Bool) -> Swift.Void)? = nil) -> PromiseKit.Promise<strList> {
+        return _impl._invokeAsync(operation: "scanFolder",
+                                  mode: .Normal,
+                                  read: { istr in
+                                      let iceP_returnValue: strList = try istr.read()
+                                      return iceP_returnValue
+                                  },
+                                  context: context,
+                                  sentOn: sentOn,
+                                  sentFlags: sentFlags,
+                                  sent: sent)
+    }
 }
 
 
@@ -755,12 +922,18 @@ public struct PrinterDisp: Ice.Disp {
             return try servant._iceD_pause(incoming: request, current: current)
         case "playFile":
             return try servant._iceD_playFile(incoming: request, current: current)
+        case "playFileFromArtiste":
+            return try servant._iceD_playFileFromArtiste(incoming: request, current: current)
+        case "playFileFromSongAndArtiste":
+            return try servant._iceD_playFileFromSongAndArtiste(incoming: request, current: current)
         case "printString":
             return try servant._iceD_printString(incoming: request, current: current)
         case "renameFile":
             return try servant._iceD_renameFile(incoming: request, current: current)
         case "resume":
             return try servant._iceD_resume(incoming: request, current: current)
+        case "scanFolder":
+            return try servant._iceD_scanFolder(incoming: request, current: current)
         case "stopFile":
             return try servant._iceD_stopFile(incoming: request, current: current)
         case "uploadFile":
@@ -821,6 +994,24 @@ public protocol Printer {
     func playFile(filename: Swift.String, current: Ice.Current) throws -> Swift.Bool
 
     ///
+    /// - parameter filename: `Swift.String`
+    ///
+    /// - parameter current: `Ice.Current` - The Current object for the dispatch.
+    ///
+    /// - returns: `Swift.Bool`
+    func playFileFromArtiste(filename: Swift.String, current: Ice.Current) throws -> Swift.Bool
+
+    ///
+    /// - parameter artist: `Swift.String`
+    ///
+    /// - parameter son: `Swift.String`
+    ///
+    /// - parameter current: `Ice.Current` - The Current object for the dispatch.
+    ///
+    /// - returns: `Swift.Bool`
+    func playFileFromSongAndArtiste(artist: Swift.String, son: Swift.String, current: Ice.Current) throws -> Swift.Bool
+
+    ///
     /// - parameter current: `Ice.Current` - The Current object for the dispatch.
     func stopFile(current: Ice.Current) throws
 
@@ -857,6 +1048,12 @@ public protocol Printer {
     ///
     /// - returns: `Swift.Bool`
     func isPlaying(current: Ice.Current) throws -> Swift.Bool
+
+    ///
+    /// - parameter current: `Ice.Current` - The Current object for the dispatch.
+    ///
+    /// - returns: `strList`
+    func scanFolder(current: Ice.Current) throws -> strList
 }
 
 /// Printer overview.
@@ -875,6 +1072,10 @@ public protocol Printer {
 ///
 ///  - playFile: 
 ///
+///  - playFileFromArtiste: 
+///
+///  - playFileFromSongAndArtiste: 
+///
 ///  - stopFile: 
 ///
 ///  - pause: 
@@ -886,6 +1087,8 @@ public protocol Printer {
 ///  - uploadFile: 
 ///
 ///  - isPlaying: 
+///
+///  - scanFolder: 
 public extension Printer {
     func _iceD_printString(incoming inS: Ice.Incoming, current: Ice.Current) throws -> PromiseKit.Promise<Ice.OutputStream>? {
         let iceP_s: Swift.String = try inS.read { istr in
@@ -961,6 +1164,33 @@ public extension Printer {
         }
     }
 
+    func _iceD_playFileFromArtiste(incoming inS: Ice.Incoming, current: Ice.Current) throws -> PromiseKit.Promise<Ice.OutputStream>? {
+        let iceP_filename: Swift.String = try inS.read { istr in
+            let iceP_filename: Swift.String = try istr.read()
+            return iceP_filename
+        }
+
+        let iceP_returnValue = try self.playFileFromArtiste(filename: iceP_filename, current: current)
+
+        return inS.setResult{ ostr in
+            ostr.write(iceP_returnValue)
+        }
+    }
+
+    func _iceD_playFileFromSongAndArtiste(incoming inS: Ice.Incoming, current: Ice.Current) throws -> PromiseKit.Promise<Ice.OutputStream>? {
+        let (iceP_artist, iceP_son): (Swift.String, Swift.String) = try inS.read { istr in
+            let iceP_artist: Swift.String = try istr.read()
+            let iceP_son: Swift.String = try istr.read()
+            return (iceP_artist, iceP_son)
+        }
+
+        let iceP_returnValue = try self.playFileFromSongAndArtiste(artist: iceP_artist, son: iceP_son, current: current)
+
+        return inS.setResult{ ostr in
+            ostr.write(iceP_returnValue)
+        }
+    }
+
     func _iceD_stopFile(incoming inS: Ice.Incoming, current: Ice.Current) throws -> PromiseKit.Promise<Ice.OutputStream>? {
         try inS.readEmptyParams()
 
@@ -1017,6 +1247,16 @@ public extension Printer {
         try inS.readEmptyParams()
 
         let iceP_returnValue = try self.isPlaying(current: current)
+
+        return inS.setResult{ ostr in
+            ostr.write(iceP_returnValue)
+        }
+    }
+
+    func _iceD_scanFolder(incoming inS: Ice.Incoming, current: Ice.Current) throws -> PromiseKit.Promise<Ice.OutputStream>? {
+        try inS.readEmptyParams()
+
+        let iceP_returnValue = try self.scanFolder(current: current)
 
         return inS.setResult{ ostr in
             ostr.write(iceP_returnValue)

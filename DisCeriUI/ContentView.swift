@@ -10,6 +10,7 @@ import SwiftUI
 import AVFoundation
 import MobileVLCKit
 import Ice
+import Combine
 
 extension Color {
     
@@ -26,6 +27,7 @@ extension LinearGradient {
 
 struct ContentView: View {
     @State private var menutap = false
+    @State private var scrollToAlbumTitle: String? = nil
     
     var body: some View {
         ZStack{
@@ -166,19 +168,19 @@ struct WheelView: View {
         
         func pause() {
             player.pause()
-            print(player.state)
+            //print(player.state)
         }
         
         func resume() {
             let media = VLCMedia(url: URL(string: "rtsp://\(ipAddress):5777/music")!)
             player.media = media
             player.play()
-            print(player.state)
+            //print(player.state)
         }
         
         func stop() {
             player.stop()
-            print(player.state)
+            //print(player.state)
         }
     }
     
@@ -453,19 +455,42 @@ struct WheelView: View {
 }
 
 
-struct Album: Identifiable {
+/*struct Album: Identifiable {
     let id: Int
     let name: String
     let artist: String
     let image: UIImage
+}*/
+
+struct Album: Identifiable, Hashable {
+    let title: String
+    let cover: UIImage
+    let id: String
 }
 
 class AlbumViewModel: ObservableObject {
-    @Published var albums: [String] = []
+    @Published var albums: [Album] = []
+    @Published var albumsTemp: [String] = []
     
     func fetchAlbums() {
         let musicHandler = MusicListHandler()
-        albums = musicHandler.getMusic()
+        var image: UIImage?
+        
+        albumsTemp = musicHandler.getMusic()
+        for album in albumsTemp {
+            let components = album.components(separatedBy: "|")
+            if let imageUrl = URL(string: components[1]) {
+                do {
+                    let imageData = try Data(contentsOf: imageUrl)
+                    image = UIImage(data: imageData)
+                } catch {
+                    print("Error downloading image: \(error.localizedDescription)")
+                }
+            }
+            let album = Album(title: components[0], cover: image!, id: components[2])
+            albums.append(album)
+        }
+        print(albums)
     }
 }
 
@@ -473,49 +498,53 @@ class AlbumViewModel: ObservableObject {
 //Geometry Reader : Album View
 struct DisplayContent: View {
     @StateObject var viewModel = AlbumViewModel()
-    
+    @State var scrollToAlbumTitle: String?
+
     var body: some View {
         ZStack {
             GeometryReader { fullView in
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 100) {
-                        ForEach(viewModel.albums, id: \.self) { album in
-                            GeometryReader { geo in
-                                VStack {
-                                    Text(album)
-                                        .font(.title3)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(Color.white)
-                                        .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 10), axis: (x: 0, y: 1, z: 0))
-                                    /*Image(uiImage: album.image)
-                                        .resizable()
-                                        .frame(width: 260, height: 260)
-                                        .cornerRadius(15)
-                                        .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 10), axis: (x: 0, y: 1, z: 0))*/
-                                    
-                                    /*Text(album.artist)
-                                        .font(.title3)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(Color.white)
-                                        .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 10), axis: (x: 0, y: 1, z: 0))
-                                    
-                                    Text(album.name)
-                                        .font(.subheadline)
-                                        .fontWeight(.light)
-                                        .foregroundColor(Color.white)
-                                        .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 10), axis: (x: 0, y: 1, z: 0))*/
+                ScrollViewReader { scrollViewProxy in
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 125) {
+                            ForEach(viewModel.albums.indices, id: \.self) { index in
+                                let album = viewModel.albums[index]
+                                GeometryReader { geo in
+                                    VStack {
+                                        Text(album.title)
+                                            .id(album.title) // Set the id to the title of the album
+                                            .font(.title3)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(Color.white)
+                                            .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 20), axis: (x: 0, y: 1, z: 0))
+                                        Image(uiImage: album.cover)
+                                            .resizable()
+                                            .frame(width: 260, height: 260)
+                                            .cornerRadius(15)
+                                            .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 30), axis: (x: 0, y: 1, z: 0))
+                                    }
                                 }
+                                .frame(width: 150)
+                                .padding(.trailing, index == viewModel.albums.count - 1 ? 100 : 0) // Add 100-pixel padding to the last element
                             }
-                            .frame(width: 150)
+                        }
+                        .padding(.horizontal, (fullView.size.width - 100) / 4)
+                        
+                    }
+                    .onAppear{
+                        print("oui : \(String(describing: scrollToAlbumTitle))")
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            if let albumTitle = scrollToAlbumTitle {
+                                scrollViewProxy.scrollTo(albumTitle, anchor: .center)
+                            }
                         }
                     }
-                    .padding(.horizontal, (fullView.size.width - 150) / 2)
                 }
             }
             .ignoresSafeArea()
         }
         .onAppear {
             viewModel.fetchAlbums()
+            print(scrollToAlbumTitle as Any)
         }
     }
 }

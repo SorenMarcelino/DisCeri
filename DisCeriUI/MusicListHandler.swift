@@ -20,7 +20,7 @@ class MusicListHandler {
             }
 
             let findMusic = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
-            let result = try findMusic.findFile("")
+            let result = try findMusic.scanFolder()
             
             return result
         } catch {

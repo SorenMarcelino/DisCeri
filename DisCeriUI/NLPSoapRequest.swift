@@ -14,19 +14,21 @@ class NLPSoapRequest: ObservableObject {
     var songData: String = ""
     var artistData: String = ""
     let ipAddress = BasicFunctions().getWifiIpAdress()
+    @Published var musicAskedFor: String = "" {
+        didSet {
+            // Cette méthode est appelée chaque fois que la variable est mise à jour
+            miseAJourVue(nouvelleVariable: musicAskedFor)
+        }
+    }
+    
+    func miseAJourVue(nouvelleVariable: String) {
+        // Mettre à jour la vue avec la nouvelle variable ici
+        print(musicAskedFor)
+        print("La variable a changé : \(nouvelleVariable)")
+    }
     
     func requestNLP(text: String) -> String {
         print("Début NLP Request")
-            /*guard let url = Bundle.main.url(forResource: "MacronASRTestPart", withExtension: "mp3") else {
-                print("Error: Failed to find the music file.")
-                return
-            }*/
-            
-            // Read the audio file as data
-            /*guard let text = try? Data(contentsOf: text) else {
-                print("Could not read str")
-                return
-            }*/
         
             // Encode the audio file as base64
             let str = text
@@ -88,15 +90,25 @@ class NLPSoapRequest: ObservableObject {
                 
                 print("Action asked for : \(self.actionData)")
                 print("Song asked for : \(self.songData.capitalized)")
+                self.musicAskedFor = self.songData
                 print("Artist asked for : \(self.artistData.capitalized)")
                       
-                if self.actionData == "PlayMusic" || self.actionData == "PlaySong" || self.actionData == "PlayArtist" || self.actionData == "PlaySongAndArtist" {
-                    self.clientVLC.play(songData: self.songData, artistData: self.artistData)
-                } else if self.actionData == "Stop" {
+                if self.actionData == "PlaySong" {
+                    self.clientVLC.playSong(songData: self.songData)
+                }
+                else if self.actionData == "PlayArtist" {
+                    self.clientVLC.playArtist(artistData: self.artistData)
+                }
+                else if self.actionData == "PlaySongAndArtist" {
+                    self.clientVLC.playSongAndArtist(songData: self.songData, artistData: self.artistData)
+                }
+                else if self.actionData == "Stop" {
                     self.clientVLC.stop()
-                } else if self.actionData == "Pause" {
+                }
+                else if self.actionData == "Pause" {
                     self.clientVLC.pause()
-                } else if self.actionData == "Resume" {
+                }
+                else if self.actionData == "Resume" {
                     self.clientVLC.resume()
                 }
                 semaphore.signal()
