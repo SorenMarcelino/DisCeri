@@ -28,6 +28,7 @@ extension LinearGradient {
 struct ContentView: View {
     @State private var menutap = false
     @State private var scrollToAlbumTitle: String? = nil
+    @StateObject private var albumViewModel = AlbumViewModel()
     
     var body: some View {
         ZStack{
@@ -36,7 +37,7 @@ struct ContentView: View {
                 
                 ZStack{
                     DisplayView()
-                    DisplayContent()
+                    DisplayContent(viewModel: albumViewModel)
                         .offset(x: 0, y: 50)
                     
                 
@@ -79,7 +80,7 @@ struct ContentView: View {
             Spacer()
             
            // Wheel Result
-            WheelView()
+            WheelView(viewModel: albumViewModel)
             }.padding()
         }
     }
@@ -185,6 +186,20 @@ struct WheelView: View {
     }
     
     @State var playerVLC = PlayerVLC()
+    @State private var showAlert = false
+    @ObservedObject var viewModel: AlbumViewModel
+    
+    init(viewModel: AlbumViewModel) {
+        self.viewModel = viewModel
+    }
+
+    func presentPopupNotification() {
+        showAlert = true
+    }
+    
+    func reloadLib() {
+        self.viewModel.fetchAlbums()
+    }
 
     var body: some View {
         ZStack{
@@ -362,6 +377,7 @@ struct WheelView: View {
                         TapGesture()
                             .onEnded({
                                 self.pauseplay.toggle()
+                                presentPopupNotification()
                                 /*switch (isPlaying, isPaused) {
                                 case (false, false):
                                     print("Play")
@@ -399,6 +415,13 @@ struct WheelView: View {
                             playerVLC.player.stop()
                         }*/
                     }
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Nouvelle musique ajouté"),
+                          message: Text("Veuillez recharger la liste des musiques"),
+                          dismissButton: .default(Text("OK"), action: {
+                              reloadLib()
+                          }))
                 }
                 
                 ZStack{
@@ -476,6 +499,8 @@ class AlbumViewModel: ObservableObject {
         let musicHandler = MusicListHandler()
         var image: UIImage?
         
+        albums = []
+        
         albumsTemp = musicHandler.getMusic()
         for album in albumsTemp {
             let components = album.components(separatedBy: "|")
@@ -497,11 +522,40 @@ class AlbumViewModel: ObservableObject {
 
 //Geometry Reader : Album View
 struct DisplayContent: View {
-    @StateObject var viewModel = AlbumViewModel()
+    //@StateObject var viewModel = AlbumViewModel()
+    @ObservedObject var viewModel: AlbumViewModel
     @State var scrollToAlbumTitle: String?
     @State var ipAddress = BasicFunctions().getWifiIpAdress()
     @State var stateDelete = false
     @State var stateEdit = false
+    @State private var textFieldValue = ""
+    @State private var isShowingPopup = false
+    @State private var albumSelectedId: String = ""
+    
+    init(viewModel: AlbumViewModel) {
+        self.viewModel = viewModel
+    }
+    
+    func rename(arg: String) {
+        do {
+            let communicator = try Ice.initialize(CommandLine.arguments)
+            defer {
+                communicator.destroy()
+            }
+        
+            let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
+            stateEdit = try printer.renameFile(filename: albumSelectedId, newName: textFieldValue) // MARK: TODO
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                viewModel.fetchAlbums()
+            }
+            print("Musique modifiée : \(stateEdit)")
+        } catch {
+            print("Error: \(error)\n")
+            exit(1)
+    }
+        print("Text field value: (arg)")
+    }
 
     var body: some View {
         ZStack {
@@ -528,19 +582,9 @@ struct DisplayContent: View {
                                     .contextMenu{
                                         Group {
                                             Button("Modifier le titre", action: {
-                                                do {
-                                                    let communicator = try Ice.initialize(CommandLine.arguments)
-                                                    defer {
-                                                        communicator.destroy()
-                                                    }
-                                                
-                                                    let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
-                                                    stateEdit = try printer.renameFile(filename: album.id, newName: "Super beau")
-                                                    print("Musique modifiée : \(stateEdit)")
-                                                } catch {
-                                                    print("Error: \(error)\n")
-                                                    exit(1)
-                                            }})
+                                                self.isShowingPopup = true
+                                                albumSelectedId = album.id
+                                                })
                                             Button(action: {
                                                 do {
                                                     let communicator = try Ice.initialize(CommandLine.arguments)
@@ -550,6 +594,9 @@ struct DisplayContent: View {
                                                 
                                                     let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
                                                     stateDelete = try printer.deleteFile(album.id + "_" + album.title)
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
+                                                        viewModel.fetchAlbums()
+                                                    }
                                                     print("Musique supprimée : \(stateDelete)")
                                                 } catch {
                                                     print("Error: \(error)\n")
@@ -579,6 +626,25 @@ struct DisplayContent: View {
                 }
             }
             .ignoresSafeArea()
+            .sheet(isPresented: $isShowingPopup, content: {
+                        VStack {
+                            TextField("Entrez le nouveau titre ici", text: $textFieldValue)
+                                .padding()
+                                .background(Color(.systemGray6))
+                                .cornerRadius(10)
+                                .padding(.horizontal)
+
+                            Button("Enregistrer") {
+                                rename(arg: textFieldValue)
+                                isShowingPopup = false
+                            }
+                            .padding()
+                            .foregroundColor(.white)
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                            .padding(.horizontal)
+                        }
+                    })
         }
         .onAppear {
             viewModel.fetchAlbums()
