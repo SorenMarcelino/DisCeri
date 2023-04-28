@@ -499,6 +499,9 @@ class AlbumViewModel: ObservableObject {
 struct DisplayContent: View {
     @StateObject var viewModel = AlbumViewModel()
     @State var scrollToAlbumTitle: String?
+    @State var ipAddress = BasicFunctions().getWifiIpAdress()
+    @State var stateDelete = false
+    @State var stateEdit = false
 
     var body: some View {
         ZStack {
@@ -521,6 +524,41 @@ struct DisplayContent: View {
                                             .frame(width: 260, height: 260)
                                             .cornerRadius(15)
                                             .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 30), axis: (x: 0, y: 1, z: 0))
+                                    }
+                                    .contextMenu{
+                                        Group {
+                                            Button("Modifier le titre", action: {
+                                                do {
+                                                    let communicator = try Ice.initialize(CommandLine.arguments)
+                                                    defer {
+                                                        communicator.destroy()
+                                                    }
+                                                
+                                                    let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
+                                                    stateEdit = try printer.renameFile(filename: album.id, newName: "Super beau")
+                                                    print("Musique modifiée : \(stateEdit)")
+                                                } catch {
+                                                    print("Error: \(error)\n")
+                                                    exit(1)
+                                            }})
+                                            Button(action: {
+                                                do {
+                                                    let communicator = try Ice.initialize(CommandLine.arguments)
+                                                    defer {
+                                                        communicator.destroy()
+                                                    }
+                                                
+                                                    let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
+                                                    stateDelete = try printer.deleteFile(album.id + "_" + album.title)
+                                                    print("Musique supprimée : \(stateDelete)")
+                                                } catch {
+                                                    print("Error: \(error)\n")
+                                                    exit(1)
+                                            }}) {
+                                                Text("Supprimer la musique")
+                                                .foregroundColor(.red) // set the text color to red
+                                            }
+                                        }
                                     }
                                 }
                                 .frame(width: 150)
@@ -545,6 +583,12 @@ struct DisplayContent: View {
         .onAppear {
             viewModel.fetchAlbums()
             print(scrollToAlbumTitle as Any)
+        }
+        .onChange(of: stateDelete) { newValue in
+            if newValue {
+                print("stateDelete changé ! nouvelle valeur : \(newValue)")
+                viewModel.fetchAlbums()
+            }
         }
     }
 }
@@ -657,7 +701,7 @@ struct CustomMenu: View {
                 Divider()
                 
                 ZStack{
-                    MenuContent(textinput: "Photos" , bgColor: Color.black.opacity(0.8))
+                    MenuContent(textinput: "Edit music" , bgColor: Color.black.opacity(0.8))
                         .gesture(
                             TapGesture()
                                 .onEnded({
@@ -675,7 +719,7 @@ struct CustomMenu: View {
                 Divider()
                 
                 ZStack{
-                MenuContent(textinput: "Videos" ,bgColor: Color.black.opacity(0.8))
+                MenuContent(textinput: "Delete music" ,bgColor: Color.black.opacity(0.8))
                         .gesture(
                             TapGesture()
                                 .onEnded({
