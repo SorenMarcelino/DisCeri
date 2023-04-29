@@ -15,6 +15,8 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
     let ipCERI = "10.126.1.179"
     let ipAddress = BasicFunctions().getWifiIpAdress()
     var resultClientVLC: Bool = false
+    var statusAudioUpload: Bool = false
+    var statusCoverUpload: Bool = false
     
     func getResultClientVLC() -> Bool {
         print("get \(resultClientVLC)")
@@ -37,12 +39,8 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
         return 0
     }
     
-    func uploadAudioFile(url: URL) {
+    func uploadAudioFile(url: URL) -> Bool {
         print(FileManager.default.currentDirectoryPath)
-        /*guard let path = Bundle.main.path(forResource: "Lomepal", ofType: "mp3") else {
-            print("Error: Failed to find the music file.")
-            return
-        }*/
         
         do {
             url.startAccessingSecurityScopedResource()
@@ -76,21 +74,19 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
                 
                 file.closeFile()
                 let fileNameWithoutExtension = url.deletingPathExtension().lastPathComponent
-                try printer.uploadFile(id: id, filename: "\(fileNameWithoutExtension).mp3")
+                statusAudioUpload = try printer.uploadFile(id: id, filename: "\(fileNameWithoutExtension).mp3")
             }
             url.stopAccessingSecurityScopedResource()
+            
+            return statusAudioUpload
         } catch {
             print("Error: \(error)\n")
             exit(1)
         }
     }
 
-    func uploadCoverFile(url: URL) {
+    func uploadCoverFile(url: URL) -> Bool {
         print(FileManager.default.currentDirectoryPath)
-        /*guard let path = Bundle.main.path(forResource: "Lomepal", ofType: "mp3") else {
-            print("Error: Failed to find the music file.")
-            return
-        }*/
         
         do {
             url.startAccessingSecurityScopedResource()
@@ -125,25 +121,16 @@ class ClientVLC: NSObject, VLCMediaPlayerDelegate {
                 file.closeFile()
                 let fileNameWithoutExtension = url.deletingPathExtension().lastPathComponent
                 let pathExtension = url.pathExtension
-                try printer.uploadFile(id: id, filename: "\(fileNameWithoutExtension).\(pathExtension)")
+                statusCoverUpload = try printer.uploadFile(id: id, filename: "\(fileNameWithoutExtension).\(pathExtension)")
             }
             url.stopAccessingSecurityScopedResource()
+            return statusCoverUpload
         } catch {
             print("Error: \(error)\n")
             exit(1)
         }
     }
     
-        /*func setupPlayer() {
-        var player = VLCMediaPlayer()
-        player.delegate = self
-        let media = VLCMedia(url: URL(string: "http://\(ipSoren):5000/music")!)
-        // let url = URL(string: "http://\(ipSoren):5000/music")
-        // player.media = VLCMedia(url: url!)
-        player.media = media
-    }*/
-    
-    //var player: VLCMediaPlayer!
     func playSong(songData: String) {
         do {
             let communicator = try Ice.initialize(CommandLine.arguments)

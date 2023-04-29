@@ -43,8 +43,21 @@ class ImportAudioViewController: UIViewController, UIDocumentPickerDelegate {
         }
         print("URL de l'audio : \(audio)")
         print("URL de la pochette : \(cover)")
-        clientVLC.uploadAudioFile(url: URL(string: audio)!)
-        clientVLC.uploadCoverFile(url: URL(string: cover)!)
+        var statusAudio = clientVLC.uploadAudioFile(url: URL(string: audio)!)
+        var statusCover = clientVLC.uploadCoverFile(url: URL(string: cover)!)
+        
+        print("Status Audio = \(statusAudio)")
+        print("Status Cover = \(statusCover)")
+        
+        if statusCover {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: showAlertUploadStatusSuccess), object: nil)
+            }
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: showAlertUploadStatusError), object: nil)
+            }
+        }
         
         dismiss(animated: true)
     }

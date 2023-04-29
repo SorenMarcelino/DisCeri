@@ -25,9 +25,14 @@ extension LinearGradient {
 }
 
 let showAlertNotificationKey = "ShowAlertNotificationKey"
+let showAlertUploadStatusSuccess = "ShowAlertUploadStatusSuccess"
+let showAlertUploadStatusError = "ShowAlertUploadStatusError"
 
 struct GloVar {
     static var publisherMessageReceived = false
+    
+    static var isUploadMusicSuccess = false
+    static var isUploadMusicError = false
 }
 
 struct ContentView: View {
@@ -223,9 +228,27 @@ struct WheelView: View {
         )
     }
     
+    private var isUploadMusicSuccess: Binding<Bool> {
+        Binding<Bool>(
+            get: { GloVar.isUploadMusicSuccess },
+            set: { GloVar.isUploadMusicSuccess = $0 }
+        )
+    }
+    
     func showAlertMessage() {
         let alert = UIAlertController(title: "Nouvelle(s) musique(s) ajoutée(s)", message: "Veuillez recharger la liste des musiques", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "RECHARGER", style: .default, handler: {_ in reloadLib()}))
+        UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    func showAlertMessageUploadSuccess() {
+        let alert = UIAlertController(title: "La musique à bien été ajoutée 😁", message: "Vous pouvez en profiter dès maintenant", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in reloadLib()}))
+        UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
+    }
+    func showAlertMessageUploadError() {
+        let alert = UIAlertController(title: "La musique n'a pas pû être ajoutée 😔", message: "Veuillez rééssayer", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in reloadLib()}))
         UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
     }
 
@@ -364,15 +387,8 @@ struct WheelView: View {
                                     print("Error: \(error)\n")
                                     exit(1)
                                 }
-                                
-                                //playMusic.playMusic()
-                                //print("From Front : " + speechRecognizer.transcript) // Speech // To delete on prod
-                                //tokenizer.tokentizer(transcription: speechRecognizer.transcript)
 
                                 print("Fini")
-                                //sleep(5)
-                                //playerVLC.play(
-                                
                             }
                 }
                 
@@ -406,60 +422,28 @@ struct WheelView: View {
                             .onEnded({
                                 self.pauseplay.toggle()
                                 presentPopupNotification()
-                                /*switch (isPlaying, isPaused) {
-                                case (false, false):
-                                    print("Play")
-                                    isPlaying = true
-                                    playAudio.play(songData: "Trop Beau", artistData: "")
-                                    //playerVLC.player.play()
-                                    playerVLC.play()
-                                case (true, false):
-                                    print("Pause")
-                                    isPlaying = false
-                                    isPaused = true
-                                    //timeBeforePause = playerVLC.player.time
-                                    //playerVLC.player.pause()
-                                    playerVLC.pause()
-                                case (false, true):
-                                    print("Resume")
-                                    isPlaying = true
-                                    isPaused = false
-                                    //print(timeBeforePause.intValue)
-                                    //playerVLC.player.jumpForward(timeBeforePause.intValue)
-                                    //playerVLC.player.play()
-                                    playerVLC.resume()
-                                case (true, true):
-                                    print("🤨")
-                                }
-                                print("isPlaying : \(isPlaying) - isPaused : \(isPaused)")*/
                             })
                     ).onLongPressGesture {
                         self.pauseplay.toggle()
-                        /*if isPlaying == true || isPaused == true {
-                            print("Stop")
-                            isPlaying = false
-                            isPaused = false
-                            playAudio.stop()
-                            playerVLC.player.stop()
-                        }*/
                     }
                 }
-//                .alert(isPresented: Binding<Bool> (
-//                        get: { GloVar.publisherMessageReceived },
-//                        set: { GloVar.publisherMessageReceived = $0 }
-//                    )) {
-//                    Alert(title: Text("Nouvelle(s) musique(s) ajoutée(s)"),
-//                          message: Text("Veuillez recharger la liste des musiques"),
-//                          dismissButton: .default(Text("RECHARGER"), action: {
-//                              reloadLib()
-//                          }))
-//
-//                }
                 .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue: showAlertNotificationKey))) { _ in
                     // Set the showAlert state to true when the notification is received
                     print("👋")
                     showAlertMessage()
                     GloVar.publisherMessageReceived = true
+                }
+                .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue: showAlertUploadStatusSuccess))) { _ in
+                    // Set the showAlert state to true when the notification is received
+                    print("👋")
+                    showAlertMessageUploadSuccess()
+                    GloVar.isUploadMusicSuccess = true
+                }
+                .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue: showAlertUploadStatusError))) { _ in
+                    // Set the showAlert state to true when the notification is received
+                    print("👋")
+                    showAlertMessageUploadError()
+                    GloVar.isUploadMusicError = true
                 }
                 
                 ZStack{
