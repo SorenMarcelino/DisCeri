@@ -32,6 +32,11 @@ let showAlertUploadStatusError = "ShowAlertUploadStatusError"
 let showAlertDeleteStatusSuccess = "ShowAlertDeleteStatusSuccess"
 let showAlertDeleteStatusError = "ShowAlertDeleteStatusError"
 
+let showAlertEditStatusSuccess = "ShowAlertEditStatusSuccess"
+let showAlertEditStatusError = "ShowAlertEditStatusError"
+
+let showAlertNoMusicMatch = "ShowAlertNoMusicMatch"
+
 struct GloVar {
     static var publisherMessageReceived = false
     
@@ -40,6 +45,11 @@ struct GloVar {
     
     static var isDeleteMusicSuccess = false
     static var isDeleteMusicError = false
+    
+    static var isEditMusicSuccess = false
+    static var isEditMusicError = false
+
+    static var isNoMusicMatch = false
 }
 
 struct ContentView: View {
@@ -249,6 +259,20 @@ struct WheelView: View {
         )
     }
     
+    private var isEditMusicSuccess: Binding<Bool> {
+        Binding<Bool>(
+            get: { GloVar.isEditMusicSuccess },
+            set: { GloVar.isEditMusicSuccess = $0 }
+        )
+    }
+    
+    private var isNoMusicMatch: Binding<Bool> {
+        Binding<Bool>(
+            get: { GloVar.isNoMusicMatch },
+            set: { GloVar.isNoMusicMatch = $0 }
+        )
+    }
+    
     func showAlertMessage() {
         let alert = UIAlertController(title: "Nouvelle(s) musique(s) ajoutée(s)", message: "Veuillez recharger la liste des musiques", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "RECHARGER", style: .default, handler: {_ in reloadLib()}))
@@ -273,6 +297,23 @@ struct WheelView: View {
     }
     func showAlertMessageDeleteError() {
         let alert = UIAlertController(title: "La musique n'a pas pû être supprimée 😔", message: "Veuillez rééssayer", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in reloadLib()}))
+        UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    func showAlertMessageEditSuccess() {
+        let alert = UIAlertController(title: "La musique à bien été modifiée 😁", message: "Admirez le changement", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in reloadLib()}))
+        UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
+    }
+    func showAlertMessageEditError() {
+        let alert = UIAlertController(title: "La musique n'a pas pû être modifiée 😔", message: "Veuillez rééssayer", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in reloadLib()}))
+        UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    func showAlertNoMusicMatchFunc() {
+        let alert = UIAlertController(title: "La musique n'a pas pû être trouvée 😔", message: "Veuillez rééssayer", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in reloadLib()}))
         UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
     }
@@ -385,7 +426,9 @@ struct WheelView: View {
                                                 cpt -= 1
                                             }
                                             if cpt == 0 {
-                                                print("ALERT : Pas de musique correspondant à la demande")
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
+                                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: showAlertNoMusicMatch), object: nil)
+                                                }
                                             } else {
                                                 print("Je suis là 4")
                                                 playerVLC.play()
@@ -481,6 +524,24 @@ struct WheelView: View {
                     print("👋")
                     showAlertMessageDeleteError()
                     GloVar.isDeleteMusicError = true
+                }
+                .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue: showAlertEditStatusSuccess))) { _ in
+                    // Set the showAlert state to true when the notification is received
+                    print("👋")
+                    showAlertMessageEditSuccess()
+                    GloVar.isEditMusicSuccess = true
+                }
+                .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue: showAlertEditStatusError))) { _ in
+                    // Set the showAlert state to true when the notification is received
+                    print("👋")
+                    showAlertMessageEditError()
+                    GloVar.isEditMusicError = true
+                }
+                .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue: showAlertNoMusicMatch))) { _ in
+                    // Set the showAlert state to true when the notification is received
+                    print("👋")
+                    showAlertNoMusicMatchFunc()
+                    GloVar.isNoMusicMatch = true
                 }
                 
                 ZStack{
@@ -605,10 +666,15 @@ struct DisplayContent: View {
             let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
             stateEdit = try printer.renameFile(filename: albumSelectedId, newName: textFieldValue) // MARK: TODO
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                viewModel.fetchAlbums()
+            if stateEdit {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: showAlertEditStatusSuccess), object: nil)
+                }
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: showAlertEditStatusError), object: nil)
+                }
             }
-            print("Musique modifiée : \(stateEdit)")
         } catch {
             print("Error: \(error)\n")
             exit(1)
