@@ -24,6 +24,11 @@ extension LinearGradient {
     }
 }
 
+let showAlertNotificationKey = "ShowAlertNotificationKey"
+
+struct GloVar {
+    static var publisherMessageReceived = false
+}
 
 struct ContentView: View {
     @State private var menutap = false
@@ -82,6 +87,15 @@ struct ContentView: View {
            // Wheel Result
             WheelView(viewModel: albumViewModel)
             }.padding()
+        }
+        .onAppear(){
+            print("Thread Notifier")
+            let semaphore = DispatchSemaphore(value: 0)
+            DispatchQueue.global().async {
+                run()
+                print("oui")
+                semaphore.signal()
+            }
         }
     }
 }
@@ -188,6 +202,7 @@ struct WheelView: View {
     @State var playerVLC = PlayerVLC()
     @State private var showAlert = false
     @ObservedObject var viewModel: AlbumViewModel
+    @State var gloVar = GloVar()
     
     init(viewModel: AlbumViewModel) {
         self.viewModel = viewModel
@@ -199,6 +214,19 @@ struct WheelView: View {
     
     func reloadLib() {
         self.viewModel.fetchAlbums()
+    }
+    
+    private var publisherMessageReceived: Binding<Bool> {
+        Binding<Bool>(
+            get: { GloVar.publisherMessageReceived },
+            set: { GloVar.publisherMessageReceived = $0 }
+        )
+    }
+    
+    func showAlertMessage() {
+        let alert = UIAlertController(title: "Nouvelle(s) musique(s) ajoutée(s)", message: "Veuillez recharger la liste des musiques", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "RECHARGER", style: .default, handler: {_ in reloadLib()}))
+        UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
     }
 
     var body: some View {
@@ -416,12 +444,22 @@ struct WheelView: View {
                         }*/
                     }
                 }
-                .alert(isPresented: $showAlert) {
-                    Alert(title: Text("Nouvelle musique ajouté"),
-                          message: Text("Veuillez recharger la liste des musiques"),
-                          dismissButton: .default(Text("OK"), action: {
-                              reloadLib()
-                          }))
+//                .alert(isPresented: Binding<Bool> (
+//                        get: { GloVar.publisherMessageReceived },
+//                        set: { GloVar.publisherMessageReceived = $0 }
+//                    )) {
+//                    Alert(title: Text("Nouvelle(s) musique(s) ajoutée(s)"),
+//                          message: Text("Veuillez recharger la liste des musiques"),
+//                          dismissButton: .default(Text("RECHARGER"), action: {
+//                              reloadLib()
+//                          }))
+//
+//                }
+                .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue: showAlertNotificationKey))) { _ in
+                    // Set the showAlert state to true when the notification is received
+                    print("👋")
+                    showAlertMessage()
+                    GloVar.publisherMessageReceived = true
                 }
                 
                 ZStack{

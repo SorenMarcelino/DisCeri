@@ -34,6 +34,11 @@
 		4530325129C749D10052A22B /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530325029C749D10052A22B /* Package.swift */; };
 		4530325A29C74FF20052A22B /* Ice in Frameworks */ = {isa = PBXBuildFile; productRef = 4530325929C74FF20052A22B /* Ice */; };
 		4530325C29C7536B0052A22B /* Config.client in Resources */ = {isa = PBXBuildFile; fileRef = 4530325B29C7536B0052A22B /* Config.client */; };
+		453E467B29FC957400855830 /* ClockI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453E467A29FC957400855830 /* ClockI.swift */; };
+		453E467D29FC9B3500855830 /* IceStorm in Frameworks */ = {isa = PBXBuildFile; productRef = 453E467C29FC9B3500855830 /* IceStorm */; };
+		453E467F29FCA0A600855830 /* Publisheur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453E467E29FCA0A600855830 /* Publisheur.swift */; };
+		453E468129FCA19B00855830 /* Notifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453E468029FCA19B00855830 /* Notifier.swift */; };
+		453E468329FCAB9700855830 /* config.sub in Resources */ = {isa = PBXBuildFile; fileRef = 453E468229FCAB9700855830 /* config.sub */; };
 		454CF596299E9AF6002DDD54 /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454CF595299E9AF6002DDD54 /* SpeechRecognizer.swift */; };
 		454F3B7129C36D240019A6EC /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F3B7029C36D240019A6EC /* AudioRecorder.swift */; };
 		4558239729E352BD0089A878 /* Printer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4558239629E352BD0089A878 /* Printer.swift */; };
@@ -99,6 +104,10 @@
 		4530325029C749D10052A22B /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		4530325329C74C910052A22B /* ice-spm-3.7.8 */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "ice-spm-3.7.8"; path = "../../Downloads/ice-spm-3.7.8"; sourceTree = "<group>"; };
 		4530325B29C7536B0052A22B /* Config.client */ = {isa = PBXFileReference; lastKnownFileType = text; path = Config.client; sourceTree = "<group>"; };
+		453E467A29FC957400855830 /* ClockI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockI.swift; sourceTree = "<group>"; };
+		453E467E29FCA0A600855830 /* Publisheur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publisheur.swift; sourceTree = SOURCE_ROOT; };
+		453E468029FCA19B00855830 /* Notifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifier.swift; sourceTree = "<group>"; };
+		453E468229FCAB9700855830 /* config.sub */ = {isa = PBXFileReference; lastKnownFileType = file; path = config.sub; sourceTree = SOURCE_ROOT; };
 		454CF595299E9AF6002DDD54 /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		454F3B7029C36D240019A6EC /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		4558239629E352BD0089A878 /* Printer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Printer.swift; sourceTree = SOURCE_ROOT; };
@@ -128,6 +137,7 @@
 				450CCCB429C3CA530008BA3E /* VideoToolbox.framework in Frameworks */,
 				450CCCB229C3CA4F0008BA3E /* Security.framework in Frameworks */,
 				450CCCB029C3CA4A0008BA3E /* QuartzCore.framework in Frameworks */,
+				453E467D29FC9B3500855830 /* IceStorm in Frameworks */,
 				450CCCAE29C3CA460008BA3E /* OpenGLES.framework in Frameworks */,
 				450CCCAC29C3CA410008BA3E /* libxml2.tbd in Frameworks */,
 				4530325A29C74FF20052A22B /* Ice in Frameworks */,
@@ -182,6 +192,8 @@
 		45EDA8EE2992646E00C03356 /* DisCeriUI */ = {
 			isa = PBXGroup;
 			children = (
+				453E468229FCAB9700855830 /* config.sub */,
+				453E467E29FCA0A600855830 /* Publisheur.swift */,
 				4558239629E352BD0089A878 /* Printer.swift */,
 				45EDA8EF2992646E00C03356 /* DisCeriUIApp.swift */,
 				45EDA8F12992646E00C03356 /* ContentView.swift */,
@@ -205,6 +217,8 @@
 				4530325B29C7536B0052A22B /* Config.client */,
 				45C8073929D9DFBF002E5EFF /* XMLDelegate.swift */,
 				45C8073B29D9E04D002E5EFF /* XMLParserDelegateCustom.swift */,
+				453E467A29FC957400855830 /* ClockI.swift */,
+				453E468029FCA19B00855830 /* Notifier.swift */,
 			);
 			path = DisCeriUI;
 			sourceTree = "<group>";
@@ -274,6 +288,7 @@
 			packageProductDependencies = (
 				45EF348329C21BC800DCDAFC /* Swifter */,
 				4530325929C74FF20052A22B /* Ice */,
+				453E467C29FC9B3500855830 /* IceStorm */,
 			);
 			productName = TestUI;
 			productReference = 45EDA8EC2992646E00C03356 /* DisCeri.app */;
@@ -324,6 +339,7 @@
 				45A2D87929C2FDB800F125DB /* AntoineDanielASRTestPart.mp3 in Resources */,
 				45EF348629C21DEB00DCDAFC /* MacronASRTestPart.mp3 in Resources */,
 				4530325C29C7536B0052A22B /* Config.client in Resources */,
+				453E468329FCAB9700855830 /* config.sub in Resources */,
 				45EDA8F72992647300C03356 /* Preview Assets.xcassets in Resources */,
 				45EDA8F42992647300C03356 /* Assets.xcassets in Resources */,
 				4519F76629AB6F41009414CA /* Lomepal.mp3 in Resources */,
@@ -384,11 +400,14 @@
 				450CCCB929C3CACE0008BA3E /* header.m in Sources */,
 				450F1E0D29B0FA0B00A21A17 /* NaturalLanguageProcesser.swift in Sources */,
 				45D468152996834900573475 /* BasicFunctions.swift in Sources */,
+				453E468129FCA19B00855830 /* Notifier.swift in Sources */,
 				450CCCBB29C3CB5F0008BA3E /* ClientVLC.swift in Sources */,
 				454CF596299E9AF6002DDD54 /* SpeechRecognizer.swift in Sources */,
 				45EDA8F22992646E00C03356 /* ContentView.swift in Sources */,
 				45EF348129C21B6F00DCDAFC /* ASRSoapRequest.swift in Sources */,
 				454F3B7129C36D240019A6EC /* AudioRecorder.swift in Sources */,
+				453E467B29FC957400855830 /* ClockI.swift in Sources */,
+				453E467F29FCA0A600855830 /* Publisheur.swift in Sources */,
 				45EE29D429E2F9D20036A311 /* MusicListHandler.swift in Sources */,
 				4530324F29C735810052A22B /* ImportAudioFromFilesApp.swift in Sources */,
 				45C8073C29D9E04D002E5EFF /* XMLParserDelegateCustom.swift in Sources */,
@@ -627,6 +646,10 @@
 		4530325929C74FF20052A22B /* Ice */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Ice;
+		};
+		453E467C29FC9B3500855830 /* IceStorm */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = IceStorm;
 		};
 		45EF348329C21BC800DCDAFC /* Swifter */ = {
 			isa = XCSwiftPackageProductDependency;
