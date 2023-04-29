@@ -25,14 +25,21 @@ extension LinearGradient {
 }
 
 let showAlertNotificationKey = "ShowAlertNotificationKey"
+
 let showAlertUploadStatusSuccess = "ShowAlertUploadStatusSuccess"
 let showAlertUploadStatusError = "ShowAlertUploadStatusError"
+
+let showAlertDeleteStatusSuccess = "ShowAlertDeleteStatusSuccess"
+let showAlertDeleteStatusError = "ShowAlertDeleteStatusError"
 
 struct GloVar {
     static var publisherMessageReceived = false
     
     static var isUploadMusicSuccess = false
     static var isUploadMusicError = false
+    
+    static var isDeleteMusicSuccess = false
+    static var isDeleteMusicError = false
 }
 
 struct ContentView: View {
@@ -235,6 +242,13 @@ struct WheelView: View {
         )
     }
     
+    private var isDeleteMusicSuccess: Binding<Bool> {
+        Binding<Bool>(
+            get: { GloVar.isDeleteMusicSuccess },
+            set: { GloVar.isDeleteMusicSuccess = $0 }
+        )
+    }
+    
     func showAlertMessage() {
         let alert = UIAlertController(title: "Nouvelle(s) musique(s) ajoutée(s)", message: "Veuillez recharger la liste des musiques", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "RECHARGER", style: .default, handler: {_ in reloadLib()}))
@@ -248,6 +262,17 @@ struct WheelView: View {
     }
     func showAlertMessageUploadError() {
         let alert = UIAlertController(title: "La musique n'a pas pû être ajoutée 😔", message: "Veuillez rééssayer", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in reloadLib()}))
+        UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    func showAlertMessageDeleteSuccess() {
+        let alert = UIAlertController(title: "La musique à bien été supprimée 😁", message: "Elle nous manquera (ou pas)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "SO LONG", style: .default, handler: {_ in reloadLib()}))
+        UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
+    }
+    func showAlertMessageDeleteError() {
+        let alert = UIAlertController(title: "La musique n'a pas pû être supprimée 😔", message: "Veuillez rééssayer", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in reloadLib()}))
         UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
     }
@@ -445,6 +470,18 @@ struct WheelView: View {
                     showAlertMessageUploadError()
                     GloVar.isUploadMusicError = true
                 }
+                .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue: showAlertDeleteStatusSuccess))) { _ in
+                    // Set the showAlert state to true when the notification is received
+                    print("👋")
+                    showAlertMessageDeleteSuccess()
+                    GloVar.isDeleteMusicSuccess = true
+                }
+                .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue: showAlertDeleteStatusError))) { _ in
+                    // Set the showAlert state to true when the notification is received
+                    print("👋")
+                    showAlertMessageDeleteError()
+                    GloVar.isDeleteMusicError = true
+                }
                 
                 ZStack{
                 
@@ -616,10 +653,17 @@ struct DisplayContent: View {
                                                 
                                                     let printer = try uncheckedCast(prx: communicator.stringToProxy("SimplePrinter:default -h \(ipAddress) -p 10000")!, type: PrinterPrx.self)
                                                     stateDelete = try printer.deleteFile(album.id + "_" + album.title)
-                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
-                                                        viewModel.fetchAlbums()
+                                                    print("State Delete \(stateDelete)")
+                                                                                                        
+                                                    if stateDelete {
+                                                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: showAlertDeleteStatusSuccess), object: nil)
+                                                        }
+                                                    } else {
+                                                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: showAlertDeleteStatusError), object: nil)
+                                                        }
                                                     }
-                                                    print("Musique supprimée : \(stateDelete)")
                                                 } catch {
                                                     print("Error: \(error)\n")
                                                     exit(1)
